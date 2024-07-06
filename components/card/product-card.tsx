@@ -5,14 +5,13 @@ import { calculateDiscount, cn } from "@/lib/utils";
 import { ProductProps } from "@/lib/products";
 import { AnimatePresence, motion } from "framer-motion";
 
-type Props = {};
-
 const ProductCard = ({
 	id,
 	title,
 	image,
 	discount_percentage,
 	price,
+	is_in_stock,
 }: ProductProps) => {
 	return (
 		<motion.a
@@ -39,9 +38,15 @@ const ProductCard = ({
 			className="w-full max-w-[340px] flex-col flex gap-y-2"
 		>
 			<div className="flex flex-col bg-accent-card items-center pb-4 md:pb-7">
-				<span className="bg-accent-white w-fit px-2 py-1 md:px-3 self-start">
-					Save {discount_percentage}%
-				</span>
+				{is_in_stock ? (
+					<span className="bg-accent-white w-fit px-2 py-1 md:px-3 self-start">
+						Save {discount_percentage}%
+					</span>
+				) : (
+					<span className="bg-accent-white w-fit px-2 py-1 md:px-3 self-start">
+						Sold out
+					</span>
+				)}
 				<BlurImage
 					src={image}
 					width={290}
