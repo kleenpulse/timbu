@@ -1,0 +1,101 @@
+"use client";
+
+/* eslint-disable react-hooks/exhaustive-deps */
+import ProductCard from "@/components/card/product-card";
+import LoadingSpinner from "@/components/miscellaneous/LoadingSpinner";
+import { ProductProps, PRODUCTS } from "@/lib/products";
+import { AnimatePresence, motion } from "framer-motion";
+import dynamic from "next/dynamic";
+import React, { useEffect, useState } from "react";
+
+type Props = {};
+const Pagination = dynamic(() => import("react-paginate"), {
+	ssr: false,
+	loading: () => <LoadingSpinner />,
+});
+const ProductGrid = (props: Props) => {
+	const [userId, setUserId] = useState("");
+	const [totalPages, setTotalPages] = useState(0);
+	const [currentPage, setCurrentPage] = useState(0);
+	const [perPage, setPerPage] = useState("12");
+	const [error, setError] = useState("");
+	const [perPageForm, setPerPageForm] = useState("");
+	const [isLast, setIsLast] = useState(false);
+	const [subset, setSubset] = useState<ProductProps[]>([]);
+
+	const startIndex = currentPage * Number(perPage);
+	const endIndex = startIndex + Number(perPage);
+
+	const handlePageChange = ({ selected }: { selected: number }) => {
+		setCurrentPage(selected);
+		window?.scrollTo({ top: 0, behavior: "smooth" });
+	};
+
+	useEffect(() => {
+		if (subset.includes(PRODUCTS[PRODUCTS.length - 1])) {
+			setIsLast(true);
+		} else {
+			setIsLast(false);
+		}
+	}, [subset]);
+
+	useEffect(() => {
+		if (PRODUCTS.length < 1) return;
+		setTotalPages(Math.ceil(PRODUCTS.length / Number(perPage)));
+		setSubset(PRODUCTS.slice(startIndex, endIndex));
+	}, [PRODUCTS, perPage]);
+
+	useEffect(() => {
+		const perPage = localStorage.getItem("perPage");
+		if (perPage && typeof perPage === "string") {
+			setPerPage(perPage);
+			return;
+		}
+	}, []);
+
+	return (
+		<div className="w-full min-h-screen">
+			<motion.div
+				initial="productCards"
+				animate="whileInView"
+				whileInView="whileInView"
+				transition={{ duration: 0.3, staggerChildren: 0.2 }}
+				className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-8 lg:gap-y-12 xl:gap-y-16 relative"
+			>
+				<AnimatePresence>
+					{subset.length > 0 &&
+						subset.map((product) => (
+							<ProductCard key={product.id} {...product} />
+						))}
+				</AnimatePresence>
+			</motion.div>
+			<div className="mt-8 md:mt-12 lg:mt-16 flex w-full justify-center">
+				{totalPages > 1 && (
+					<Pagination
+						breakLabel="..."
+						nextLabel="Next "
+						previousLabel=" Previous"
+						previousAriaLabel="Previous"
+						nextAriaLabel="Next"
+						pageCount={totalPages}
+						// onPageChange={({ selected }) => setCurrentPage(selected)}
+						onPageChange={handlePageChange}
+						pageRangeDisplayed={3}
+						marginPagesDisplayed={2}
+						className="flex select-none items-center justify-center rounded-md  px-4"
+						pageClassName="w-8 h-8 flex justify-center items-center  "
+						previousClassName="pr-2 lg:pr-4 text-accent-orange  font-medium"
+						nextClassName="pl-2 lg:pl-4 text-accent-orange font-medium"
+						pageLinkClassName="  w-full h-full flex items-center justify-center"
+						activeClassName="bg-accent-orange !text-white  font-medium rounded-md"
+						renderOnZeroPageCount={null}
+						disabledClassName="cursor-not-allowed opacity-70"
+						disabledLinkClassName="cursor-not-allowed opacity-70"
+					/>
+				)}
+			</div>
+		</div>
+	);
+};
+
+export default ProductGrid;
