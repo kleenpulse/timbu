@@ -10,6 +10,7 @@ export type ProductProps = {
 	image: string;
 	rating: number;
 	is_in_stock?: boolean;
+	item_count?: number;
 };
 
 export const PRODUCTS: ProductProps[] = [
@@ -26,6 +27,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-1.png",
 		discount_percentage: 14,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "2",
@@ -40,6 +42,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-2.png",
 		discount_percentage: 10,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "3",
@@ -69,6 +72,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-4.png",
 		discount_percentage: 25,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "5",
@@ -78,10 +82,11 @@ export const PRODUCTS: ProductProps[] = [
 			"The Nourishing Body Lotion by RadiantGlow is a hydrating lotion that provides long-lasting moisture and a silky-smooth feel. Infused with natural extracts to keep your skin soft and supple.",
 		how_to_use: "Apply generously over the body, focusing on dry areas.",
 		price: 145,
-		category: "lotion",
+		category: "skincare",
 		image: "/product/product-5.png",
 		discount_percentage: 18,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "6",
@@ -107,10 +112,11 @@ export const PRODUCTS: ProductProps[] = [
 		how_to_use:
 			"Use the lip scrub to exfoliate, apply the lip balm for hydration, and finish with the lip plumper.",
 		price: 620,
-		category: "lipcare",
+		category: "skincare",
 		image: "/product/product-7.png",
 		discount_percentage: 15,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "8",
@@ -125,6 +131,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-8.png",
 		discount_percentage: 22,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "9",
@@ -135,7 +142,7 @@ export const PRODUCTS: ProductProps[] = [
 		how_to_use:
 			"Apply a small amount to your hands and massage in until fully absorbed.",
 		price: 225,
-		category: "handcare",
+		category: "cream",
 		image: "/product/product-9.png",
 		discount_percentage: 30,
 		rating: 4,
@@ -154,6 +161,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-10.png",
 		discount_percentage: 28,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "11",
@@ -168,6 +176,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-11.png",
 		discount_percentage: 16,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "12",
@@ -182,6 +191,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-12.png",
 		discount_percentage: 14,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "13",
@@ -211,6 +221,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-2.png",
 		discount_percentage: 15,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "15",
@@ -225,6 +236,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-3.png",
 		discount_percentage: 25,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "16",
@@ -253,6 +265,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-5.png",
 		discount_percentage: 20,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "18",
@@ -267,6 +280,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-6.png",
 		discount_percentage: 18,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "19",
@@ -281,6 +295,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-7.png",
 		discount_percentage: 22,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "20",
@@ -309,6 +324,7 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-9.png",
 		discount_percentage: 20,
 		rating: 4,
+		is_in_stock: true,
 	},
 	{
 		id: "22",
@@ -322,5 +338,6 @@ export const PRODUCTS: ProductProps[] = [
 		image: "/product/product-10.png",
 		discount_percentage: 14,
 		rating: 4,
+		is_in_stock: true,
 	},
 ];

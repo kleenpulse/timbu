@@ -1,9 +1,34 @@
-import React from "react";
+import NavBanner from "@/components/global/nav-banner";
+import ItemsNav from "@/components/navigation/items-nav";
+import MobileNav from "@/components/navigation/mobile-nav";
 
-type Props = {};
+import { PRODUCTS } from "@/lib/products";
+import dynamic from "next/dynamic";
 
-const ProductPage = (props: Props) => {
-	return <div className="w-full min-h-screen">ProductPage</div>;
+const ProductDetailsContent = dynamic(
+	() => import("@/components/section/product-details/product-details-content"),
+	{
+		ssr: false,
+	}
+);
+
+const ProductPage = ({
+	params: { productId },
+}: {
+	params: { productId: string };
+}) => {
+	const data = PRODUCTS.find((product) => product.id === productId);
+
+	return (
+		<div className="w-full flex flex-col">
+			<NavBanner />
+			<section className="w-full px-4">
+				<ItemsNav />
+				<MobileNav />
+				<ProductDetailsContent data={data!} />
+			</section>
+		</div>
+	);
 };
 
 export default ProductPage;

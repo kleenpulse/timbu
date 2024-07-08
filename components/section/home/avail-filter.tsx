@@ -14,7 +14,10 @@ import { AVAILABILITIES } from "@/lib/filters";
 const AvailFilters = () => {
 	return (
 		<Select>
-			<SelectTrigger className="rounded-md bg-transparent border-none md:px-2 w-[120px] select-none">
+			<SelectTrigger
+				defaultChecked
+				className="rounded-none bg-transparent border border-neutral-300 md:px-2 w-[120px] select-none py-2"
+			>
 				<SelectValue placeholder="Availability" />
 			</SelectTrigger>
 			<SelectContent className="sm:text-lg font-[200] shadow-xl shadow-black/20 relative z-[999] w-[120px]">
@@ -23,7 +26,8 @@ const AvailFilters = () => {
 						<SelectItem
 							key={avail.value}
 							value={avail.value}
-							className="w-full justify-between gap-x-3 focus:bg-accent-primary/30 focus:text-accent-black font-normal !text-sm"
+							defaultValue={"all"}
+							className="w-full justify-between gap-x-3 focus:bg-accent-primary/30 focus:text-accent-black font-normal !text-xs pb-2"
 						>
 							<span className="uppercase">{avail.label}</span>{" "}
 						</SelectItem>

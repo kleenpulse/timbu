@@ -11,8 +11,8 @@ const ItemsNav = (props: Props) => {
 	const { activeItem, setActiveItem } = useItemsNav();
 
 	return (
-		<div className="w-full justify-center flex">
-			<div className="flex items-center gap-x-2 md:gap-x-5 lg:gap-x-8 justify-center overflow-hidden">
+		<div className="w-full justify-center flex max-sm:hidden">
+			<div className="flex items-center gap-x-2 md:gap-x-5 lg:gap-x-8 justify-center overflow-hidden ">
 				{ITEMS_NAV.map((item) => (
 					<button
 						key={item.id}

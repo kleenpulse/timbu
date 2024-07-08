@@ -11,7 +11,7 @@ import { PRICES } from "@/lib/filters";
 const PriceFilters = () => {
 	return (
 		<Select>
-			<SelectTrigger className="rounded-md bg-transparent border-none md:px-2 w-[80px] select-none">
+			<SelectTrigger className="rounded-none bg-transparent border border-neutral-300 md:px-2 w-[120px] sm:w-[80px] select-none py-2 ">
 				<SelectValue placeholder="Price" />
 			</SelectTrigger>
 			<SelectContent className="sm:text-lg font-[200] shadow-xl shadow-black/20 relative z-[999] w-[80px]">

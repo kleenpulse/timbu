@@ -14,13 +14,10 @@ const Pagination = dynamic(() => import("react-paginate"), {
 	loading: () => <LoadingSpinner />,
 });
 const ProductGrid = (props: Props) => {
-	const [userId, setUserId] = useState("");
 	const [totalPages, setTotalPages] = useState(0);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [perPage, setPerPage] = useState("12");
-	const [error, setError] = useState("");
-	const [perPageForm, setPerPageForm] = useState("");
-	const [isLast, setIsLast] = useState(false);
+
 	const [subset, setSubset] = useState<ProductProps[]>([]);
 
 	const startIndex = currentPage * Number(perPage);
@@ -30,14 +27,6 @@ const ProductGrid = (props: Props) => {
 		setCurrentPage(selected);
 		window?.scrollTo({ top: 0, behavior: "smooth" });
 	};
-
-	useEffect(() => {
-		if (subset.includes(PRODUCTS[PRODUCTS.length - 1])) {
-			setIsLast(true);
-		} else {
-			setIsLast(false);
-		}
-	}, [subset]);
 
 	useEffect(() => {
 		if (PRODUCTS.length < 1) return;
@@ -60,7 +49,7 @@ const ProductGrid = (props: Props) => {
 				animate="whileInView"
 				whileInView="whileInView"
 				transition={{ duration: 0.3, staggerChildren: 0.2 }}
-				className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-8 lg:gap-y-12 xl:gap-y-16 relative"
+				className="w-full sm:grid  sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 xl:gap-x-8 min-[1440px]:gap-x-10 gap-y-8 lg:gap-y-12 xl:gap-y-16 relative items-center flex flex-col"
 			>
 				<AnimatePresence>
 					{subset.length > 0 &&

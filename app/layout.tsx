@@ -4,6 +4,7 @@ import "./globals.css";
 import TopBanner from "@/components/global/top-banner";
 import TopLogo from "@/components/global/top-logo";
 import Footer from "@/components/section/footer/footer";
+import GotoTop from "@/components/miscellaneous/GotoTop";
 
 const taviraj = Taviraj({
 	subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
 					{children}
 					<Footer />
 				</div>
+				<GotoTop />
 			</body>
 		</html>
 	);

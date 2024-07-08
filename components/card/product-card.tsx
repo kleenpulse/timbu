@@ -52,7 +52,7 @@ const ProductCard = ({
 					width={290}
 					height={314}
 					alt="product"
-					className="max-w-[250px] xl:max-w-[290px]"
+					className="max-w-[90%] w-full"
 					draggable={false}
 				/>
 			</div>
