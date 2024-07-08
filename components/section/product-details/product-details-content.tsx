@@ -6,6 +6,7 @@ import ProductDetails from "./product-details";
 import { ProductProps } from "@/lib/products";
 import Link from "next/link";
 import SimilarProducts from "./similar-products";
+import ProductDetailsNav from "@/components/navigation/product-details-nav";
 
 const ProductDetailsContent = ({ data }: { data: ProductProps }) => {
 	if (!data) {
@@ -22,9 +23,9 @@ const ProductDetailsContent = ({ data }: { data: ProductProps }) => {
 	}
 	return (
 		<div className="w-full relative mt-4 items-center min-h-[500px]">
+			<ProductDetailsNav />
 			<div className="flex w-full justify-between items-center mb-10 mt-4 lg:px-8 min-[1440px]:px-20">
 				<p>Product Details</p>
-				<SearchAndCart has_search={false} className="max-sm:hidden" />
 			</div>
 			<ProductDetails data={data} />
 			<SimilarProducts productId={data.id!} />

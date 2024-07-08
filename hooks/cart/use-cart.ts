@@ -6,6 +6,7 @@ type StateProps = {
 	cart: ProductProps[];
 	addToCart: (product: ProductProps) => void;
 	removeFromCart: (product: ProductProps) => void;
+	updateQuantity: (productId: ProductProps["id"], quantity: number) => void;
 	clearCart: () => void;
 };
 
@@ -33,6 +34,16 @@ export const useCart = create<StateProps>()(
 				set((state) => ({
 					cart: state.cart.filter((p) => p.id !== product.id),
 				})),
+			updateQuantity: (productId, quantity) => {
+				set((state) => ({
+					cart: state.cart.map((product) => {
+						if (product.id === productId) {
+							return { ...product, item_count: quantity };
+						}
+						return product;
+					}),
+				}));
+			},
 			clearCart: () => set({ cart: [] }),
 		}),
 		{

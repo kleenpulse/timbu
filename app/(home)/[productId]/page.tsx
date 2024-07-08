@@ -24,7 +24,7 @@ const ProductPage = ({
 			<NavBanner />
 			<section className="w-full px-4">
 				<ItemsNav />
-				<MobileNav />
+				{/* <MobileNav /> */}
 				<ProductDetailsContent data={data!} />
 			</section>
 		</div>
