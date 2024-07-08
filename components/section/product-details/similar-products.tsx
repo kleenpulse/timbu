@@ -9,7 +9,7 @@ const SimilarProducts = ({ productId }: { productId: string }) => {
 	);
 
 	return (
-		<div className="w-full mt-10 lg:mt-16 flex-col flex gap-y-6">
+		<div className="w-full mt-16 flex-col flex gap-y-6">
 			<h2 className="text-xl md:text-2xl font-medium capitalize">
 				You may also like
 			</h2>

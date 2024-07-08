@@ -32,8 +32,6 @@ const ProductCard = ({
 				stiffness: 200,
 				damping: 30,
 			}}
-			layout
-			layoutId={id}
 			viewport={{ once: true }}
 			className="w-full max-w-[340px] flex-col flex gap-y-2"
 		>
@@ -54,6 +52,7 @@ const ProductCard = ({
 					alt="product"
 					className="max-w-[90%] w-full"
 					draggable={false}
+					quality={100}
 				/>
 			</div>
 			<div className="flex flex-col items-center gap-y-2">
