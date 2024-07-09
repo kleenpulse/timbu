@@ -2,6 +2,7 @@
 import ProductCard from "@/components/card/product-card";
 import LoadingSpinner from "@/components/miscellaneous/LoadingSpinner";
 import { useProduct } from "@/hooks/product/use-product";
+import useWindowWidth from "@/hooks/util-hooks/use-window-width";
 import { ProductProps } from "@/lib/products";
 import { AnimatePresence, motion } from "framer-motion";
 import dynamic from "next/dynamic";
@@ -16,7 +17,20 @@ const ProductGrid = (props: Props) => {
 	const { products: PRODUCTS } = useProduct();
 	const [totalPages, setTotalPages] = useState(0);
 	const [currentPage, setCurrentPage] = useState(0);
-	const [perPage, setPerPage] = useState("12");
+	const { winWidth } = useWindowWidth();
+	const [perPage, setPerPage] = useState(winWidth < 600 ? "3" : "12");
+
+	useEffect(() => {
+		if (winWidth < 640) {
+			setPerPage("3");
+		}
+		if (winWidth > 640) {
+			setPerPage("6");
+		}
+		if (winWidth > 1024) {
+			setPerPage("12");
+		}
+	}, [winWidth]);
 
 	const [subset, setSubset] = useState<ProductProps[]>([]);
 

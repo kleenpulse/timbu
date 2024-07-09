@@ -33,7 +33,7 @@ const ProductCard = ({
 				damping: 30,
 			}}
 			viewport={{ once: true }}
-			className="w-full max-w-[340px] flex-col flex gap-y-2"
+			className="w-full max-w-[340px] max-sm:max-w-[250px] flex-col flex gap-y-2"
 		>
 			<div className="flex flex-col bg-accent-card items-center pb-4 md:pb-7">
 				{is_in_stock ? (
@@ -50,7 +50,7 @@ const ProductCard = ({
 					width={290}
 					height={314}
 					alt="product"
-					className="max-w-[90%] w-full"
+					className="max-w-[90%] w-full "
 					draggable={false}
 					quality={100}
 				/>
