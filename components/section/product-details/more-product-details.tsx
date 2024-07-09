@@ -35,10 +35,7 @@ const MoreProductDetails = ({ data }: { data: ProductProps }) => {
 	return (
 		<div className="w-full  flex flex-col gap-6 mt-4 lg:mt-6  ">
 			{DETAILS.map((item, index) => (
-				<motion.li
-					initial={{ opacity: 0, y: 100 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.3, delay: index * 0.2 }}
+				<li
 					key={item.id}
 					onClick={() => toggleAnswer(index)}
 					className={cn(
@@ -77,7 +74,7 @@ const MoreProductDetails = ({ data }: { data: ProductProps }) => {
 					>
 						<span className="text-accent-black">{item.body}</span>
 					</p>
-				</motion.li>
+				</li>
 			))}
 		</div>
 	);

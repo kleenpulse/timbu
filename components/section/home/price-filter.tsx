@@ -16,7 +16,7 @@ const PriceFilters = () => {
 		<select
 			value={price}
 			onChange={(e) => updatePrice(e.target.value)}
-			className="rounded-none bg-transparent border border-neutral-300 md:px-2 w-[120px] sm:w-[100px] select-none py-2 px-2"
+			className="rounded-none bg-transparent border border-neutral-300 md:px-2 w-[120px] sm:w-[100px] select-none py-2 px-2 sm:border-none"
 		>
 			{PRICES.map((filter) => (
 				<option

@@ -1,13 +1,23 @@
+"use client";
+
 import Subscribe from "@/components/form/subcribe";
 import TimbuIcon from "@/components/icons/TimbuIcon";
 import { FOOTER_LINKS } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const Footer = () => {
+	const pathname = usePathname();
+
 	return (
-		<footer className="flex flex-col w-full mt-10 lg:mt-16">
+		<footer
+			className={cn(
+				"flex flex-col w-full mt-10 lg:mt-16",
+				pathname === "/checkout" && "hidden"
+			)}
+		>
 			<div className="flex w-full items-center justify-center gap-x-2 mt-4 border-y border-gray-300 ">
 				<Link href={"/"} className="border-x border-accent-border px-4 py-2">
 					<TimbuIcon className="text-accent-border" />

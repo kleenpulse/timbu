@@ -32,7 +32,7 @@ const NumericInput: React.FC<NumericInputProps> = ({
 	};
 
 	return (
-		<div className="flex items-center space-x-2 border border-gray-300 max-w-[123px] px-2 sm:px-4 h-full justify-center">
+		<div className="flex items-center sm:space-x-2 border border-gray-300 max-w-[100px] sm:max-w-[123px] px-2 sm:px-4 h-full justify-center">
 			<button
 				onClick={handleDecrement}
 				className=" px-1 text-gray-700 rounded  text-2xl hover:scale-110"
@@ -43,7 +43,7 @@ const NumericInput: React.FC<NumericInputProps> = ({
 				type="number"
 				value={value}
 				onChange={handleChange}
-				className="w-12 text-center  py-1  rounded bg-transparent font-medium text-2xl"
+				className="sm:w-12 text-center  py-1  rounded bg-transparent font-medium text-2xl"
 				min="0"
 				max="9"
 			/>

@@ -2,11 +2,14 @@ import ProductCard from "@/components/card/product-card";
 import { PRODUCTS } from "@/lib/products";
 import React from "react";
 
-const SimilarProducts = ({ productId }: { productId: string }) => {
+const SimilarProducts = ({ productId }: { productId: string | string[] }) => {
 	if (!productId) return null;
-	const rests = PRODUCTS.filter(
-		(product) => product.id !== productId && product.is_in_stock
-	);
+	const rests = PRODUCTS.filter((product) => {
+		if (typeof productId === "string") {
+			return product.id !== productId && product.is_in_stock;
+		}
+		return !productId.includes(product.id) && product.is_in_stock;
+	});
 
 	return (
 		<div className="w-full mt-16 flex-col flex gap-y-6">
