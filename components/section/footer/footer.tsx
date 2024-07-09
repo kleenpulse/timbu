@@ -40,18 +40,16 @@ const Footer = () => {
 							<Subscribe />
 						</div>
 					</div>
-					<div className="grid w-fullx grid-cols-3 gap-x-4 min-[550px]:items-start min-[550px]:justify-center md:gap-x-8 lg:gap-x-12 xl:gap-x-16 min-[1440px]:gap-x-20">
+					<div className="grid w-fullx grid-cols-3 gap-x-4 min-[550px]:items-start min-[550px]:justify-center md:gap-x-8 lg:gap-x-12 xl:gap-x-16 min-[1440px]:gap-x-20 min-[950px]:px-0 min-[550px]:px-10">
 						{FOOTER_LINKS.map((list, idx) => (
 							<ul key={list.title} className="flex flex-col gap-y-2 md:gap-y-4">
-								<span className="text-sm sm:text-xl xl:text-[22px]">
+								<span className="text-lg sm:text-xl xl:text-[22px]">
 									{list.title}
 								</span>
 								{list.links.map((link, idx) => (
 									<li
 										key={idx}
-										className={cn(
-											"text-xs  sm:text-sm sm:font-normal md:text-base"
-										)}
+										className={cn("text-sm sm:font-normal md:text-base")}
 									>
 										{true ? (
 											link.title

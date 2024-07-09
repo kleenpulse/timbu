@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-"use client";
 
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
@@ -23,7 +22,7 @@ const Subscribe = ({ className }: { className?: string }) => {
 		>
 			<div className="flex items-center  lg:h-[48px]">
 				<input
-					className="h-full w-full   bg-secondary px-4 py-3 max-sm:max-w-[200px]  placeholder:text-accent-black outline-none focus-within:outline focus-within:outline-accent-primary"
+					className="h-full w-full   bg-secondary px-4 py-3 max-sm:max-w-[200px]x  placeholder:text-accent-black outline-none focus-within:outline focus-within:outline-accent-primary"
 					placeholder="Enter your mail"
 					value={text}
 					onChange={(e) => setText(e.target.value)}
@@ -33,7 +32,7 @@ const Subscribe = ({ className }: { className?: string }) => {
 				/>
 				<button
 					className={cn(
-						"flex items-center justify-center gap-x-4  border-none bg-accent-border px-2 py-3 text-xs text-white md:px-8 xl:px-16 sm:text-base whitespace-nowrap w-fit",
+						"flex items-center justify-center gap-x-4  border-none bg-accent-border px-5 py-3 text-xs text-white md:px-8 xl:px-16 sm:text-base whitespace-nowrap w-fit",
 						isPending
 							? "size-10 cursor-not-allowed md:size-14"
 							: "h-full w-fit cursor-pointer sm:px-6 md:py-4"

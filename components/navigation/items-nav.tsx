@@ -1,6 +1,6 @@
 "use client";
 
-import { useItemsNav } from "@/hooks/use-items-nav";
+import { useItemsNav } from "@/hooks/navigate/use-items-nav";
 import { ITEMS_NAV } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import React from "react";

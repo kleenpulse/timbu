@@ -1,5 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
+
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import useWindowHeight from "@/hooks/util-hooks/useWindowHeight";
 import { cn } from "@/lib/utils";
@@ -57,7 +58,7 @@ const GotoTop = () => {
 			role="button"
 			onClick={handleTop}
 			className={cn(
-				"fixed bottom-12 right-2 z-[9999] mx-auto flex max-w-[1440px] select-none items-center rounded border border-primary bg-accent-primary/90 text-2xl text-accent-black backdrop-blur-xl transition-all duration-1000 active:scale-95 active:duration-300 max-[400px]:bottom-16 sm:bottom-16 sm:right-5 sm:text-4xl ",
+				"fixed bottom-12 right-2 z-[9999] mx-auto flex max-w-[1440px] select-none items-center rounded border border-primary bg-accent-orange/90 text-2xl text-accent-black backdrop-blur-xl transition-all duration-1000 active:scale-95 active:duration-300 max-[400px]:bottom-16 sm:bottom-16 sm:right-5 sm:text-4xl ",
 				scrollY > 1000
 					? "translate-x-0 opacity-100 shadow-[0_0_40px_0_rgba(0,0,0,0.16)]"
 					: "translate-x-20 opacity-0",

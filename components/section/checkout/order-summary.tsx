@@ -23,17 +23,17 @@ const OrderSummary = () => {
 				<p>Order Summary</p>
 				<p>Total</p>
 			</div>
-			<div className="w-full flex flex-col md:flex-row md:justify-between md:items-start gap-x-8 xl:gap-x-12 gap-y-8">
+			<div className="w-full flex flex-col md:flex-row md:justify-between md:items-start gap-x-8 xl:gap-x-12 gap-y-12">
 				<div className="flex flex-col gap-y-10 w-full max-h-[400px] xl:max-h-[600px] overflow-y-auto cart__scroll">
 					{products.map((item) => (
 						<CheckoutCard key={item.id} {...item} />
 					))}
 				</div>
 				<div className="flex flex-col gap-y-8 md:gap-y-12 flex-shrink-x0 w-full max-w-[302px] xl:max-w-[359px] h-full justify-between  md:min-h-[425px] ">
-					<div className="flex flex-col gap-y-10">
-						<div className="flex items-center  h-[50px]">
+					<div className="flex flex-col gap-y-10 w-full">
+						<div className="flex items-center  h-[50px] ">
 							<input
-								className="h-full w-full  border border-gray-300 border-r-0 bg-secondary px-4 py-3 max-sm:max-w-[200px]  placeholder:text-gray-400 outline-none focus-within:outline focus-within:outline-accent-primary"
+								className="h-full w-full  border border-gray-300 border-r-0 bg-secondary px-4 py-3   placeholder:text-gray-400 outline-none focus-within:outline focus-within:outline-accent-primary"
 								placeholder="Discount code"
 								value={text}
 								onChange={(e) => setText(e.target.value)}
@@ -43,7 +43,7 @@ const OrderSummary = () => {
 							/>
 							<button
 								className={cn(
-									"flex items-center justify-center gap-x-4  border-none bg-accent-border px-2 py-3 text-xs text-white md:px-8  sm:text-base whitespace-nowrap w-fit",
+									"flex items-center justify-center gap-x-4  border-none bg-accent-border px-5 py-3 text-xs text-white md:px-8  sm:text-base whitespace-nowrap w-fit",
 									isPending
 										? "size-10 cursor-not-allowed md:size-14"
 										: "h-full w-fit cursor-pointer sm:px-6 md:py-4"

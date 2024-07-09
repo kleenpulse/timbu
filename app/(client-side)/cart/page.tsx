@@ -9,7 +9,7 @@ const CartPage = (props: Props) => {
 	return (
 		<div className="w-full flex flex-col">
 			<NavBanner />
-			<section className="w-full px-4">
+			<section className="w-full px-4 min-h-[400px] xl:min-h-[500px]">
 				<ItemsNav />
 				{/* <MobileNav /> */}
 				<CartContent />

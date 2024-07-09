@@ -36,7 +36,7 @@ const CartItems = (props: Props) => {
 	);
 
 	return (
-		<div className="w-full flex flex-col md:flex-row md:justify-between md:items-start md:gap-x-8 xl:gap-x-16">
+		<div className="w-full flex flex-col md:flex-row md:justify-between md:items-start md:gap-x-8 xl:gap-x-16 gap-y-10">
 			<div className="flex flex-col gap-y-10 w-full max-h-[400px] xl:max-h-[600px] overflow-y-auto cart__scroll">
 				{cart.map((item) => (
 					<CartCard key={item.id} {...item} />

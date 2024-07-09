@@ -4,7 +4,7 @@ import { ProductProps } from "@/lib/products";
 import { calculateDiscount, cn } from "@/lib/utils";
 import MoreProductDetails from "./more-product-details";
 import { useCart } from "@/hooks/cart/use-cart";
-import NumericInput from "./numeric-input";
+import NumericInput from "../../shared/numeric-input";
 
 const ProductDetails = ({ data }: { data: ProductProps }) => {
 	const { addToCart, cart } = useCart();
@@ -66,7 +66,10 @@ const ProductDetails = ({ data }: { data: ProductProps }) => {
 
 				{/* TODO: Add Product To Cart */}
 				<div className="flex items-center gap-x-5 h-[50px]">
-					<NumericInput id={data.id} />
+					<NumericInput
+						id={data.id}
+						should_disable={!data.is_in_stock || isInCart}
+					/>
 					<button
 						type="button"
 						disabled={!data.is_in_stock || isInCart}

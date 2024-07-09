@@ -1,10 +1,12 @@
 import ProductCard from "@/components/card/product-card";
-import { PRODUCTS } from "@/lib/products";
+import { useProduct } from "@/hooks/product/use-product";
+
 import React from "react";
 
 const SimilarProducts = ({ productId }: { productId: string | string[] }) => {
+	const { products } = useProduct();
 	if (!productId) return null;
-	const rests = PRODUCTS.filter((product) => {
+	const rests = products.filter((product) => {
 		if (typeof productId === "string") {
 			return product.id !== productId && product.is_in_stock;
 		}

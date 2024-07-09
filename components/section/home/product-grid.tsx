@@ -1,9 +1,8 @@
-"use client";
-
 /* eslint-disable react-hooks/exhaustive-deps */
 import ProductCard from "@/components/card/product-card";
 import LoadingSpinner from "@/components/miscellaneous/LoadingSpinner";
-import { ProductProps, PRODUCTS } from "@/lib/products";
+import { useProduct } from "@/hooks/product/use-product";
+import { ProductProps } from "@/lib/products";
 import { AnimatePresence, motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
@@ -14,6 +13,7 @@ const Pagination = dynamic(() => import("react-paginate"), {
 	loading: () => <LoadingSpinner />,
 });
 const ProductGrid = (props: Props) => {
+	const { products: PRODUCTS } = useProduct();
 	const [totalPages, setTotalPages] = useState(0);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [perPage, setPerPage] = useState("12");

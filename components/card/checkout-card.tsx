@@ -1,10 +1,11 @@
 import React from "react";
 import BlurImage from "../miscellaneous/blur-image";
-import NumericInput from "../section/product-details/numeric-input";
+import NumericInput from "../shared/numeric-input";
 import { ProductProps } from "@/lib/products";
 import { calculateDiscount } from "@/lib/utils";
 import { useCart } from "@/hooks/cart/use-cart";
 import { useCheckout } from "@/hooks/cart/use-checkout";
+import NumericInputCheckout from "../shared/numeric-input-checkout";
 
 const CheckoutCard = ({
 	image,
@@ -39,7 +40,7 @@ const CheckoutCard = ({
 				</div>
 				<div className="flex flex-col gap-y-4 items-start">
 					<p className="md:text-xl lg:text-2xl">{title}</p>
-					<NumericInput id="1" />
+					<NumericInputCheckout id={id} should_disable={false} />
 					<button
 						className="text-accent-orange md:text-lg"
 						onClick={handleItemRemove}

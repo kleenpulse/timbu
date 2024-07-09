@@ -35,14 +35,16 @@ export const useCart = create<StateProps>()(
 					cart: state.cart.filter((p) => p.id !== product.id),
 				})),
 			updateQuantity: (productId, quantity) => {
-				set((state) => ({
-					cart: state.cart.map((product) => {
-						if (product.id === productId) {
-							return { ...product, item_count: quantity };
-						}
-						return product;
-					}),
-				}));
+				set((state) => {
+					if (!state.cart) return state;
+					return {
+						cart: state.cart.map((product) =>
+							product.id === productId
+								? { ...product, item_count: quantity }
+								: product
+						),
+					};
+				});
 			},
 			clearCart: () => set({ cart: [] }),
 		}),

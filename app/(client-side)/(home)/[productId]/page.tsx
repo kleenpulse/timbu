@@ -1,8 +1,9 @@
+"use client";
+
 import NavBanner from "@/components/global/nav-banner";
 import ItemsNav from "@/components/navigation/items-nav";
-import MobileNav from "@/components/navigation/mobile-nav";
+import { useProduct } from "@/hooks/product/use-product";
 
-import { PRODUCTS } from "@/lib/products";
 import dynamic from "next/dynamic";
 
 const ProductDetailsContent = dynamic(
@@ -17,12 +18,13 @@ const ProductPage = ({
 }: {
 	params: { productId: string };
 }) => {
-	const data = PRODUCTS.find((product) => product.id === productId);
+	const { products } = useProduct();
+	const data = products.find((product) => product.id === productId);
 
 	return (
 		<div className="w-full flex flex-col">
 			<NavBanner />
-			<section className="w-full px-4">
+			<section className="w-full px-4 min-h-[400px] xl:min-h-[500px]">
 				<ItemsNav />
 				{/* <MobileNav /> */}
 				<ProductDetailsContent data={data!} />

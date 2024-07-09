@@ -64,17 +64,19 @@ export const useCheckout = create<StateProps>()(
 					},
 				})),
 			updateQuantity: (productId, quantity) => {
-				set((state) => ({
-					cart: {
-						...state.cart,
-						products: state.cart.products.map((product) => {
-							if (product.id === productId) {
-								return { ...product, item_count: quantity };
-							}
-							return product;
-						}),
-					},
-				}));
+				set((state) => {
+					if (!state.cart.products) return state;
+					return {
+						cart: {
+							...state.cart,
+							products: state.cart.products.map((product) =>
+								product.id === productId
+									? { ...product, item_count: quantity }
+									: product
+							),
+						},
+					};
+				});
 			},
 			clearCart: () =>
 				set({ cart: { products: [], shipping: "door", total: 0 } }),

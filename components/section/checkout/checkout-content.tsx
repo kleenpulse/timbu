@@ -18,7 +18,7 @@ const CheckoutContent = (props: Props) => {
 		}`;
 	}, [cart.products.length]);
 	return (
-		<div className="w-full flex flex-col gap-y-8 px-4 xl:px-8">
+		<div className="w-full flex flex-col gap-y-8 px-4 xl:px-8 min-h-[400px] xl:min-h-[500px]">
 			<div>
 				<BackButton />
 			</div>

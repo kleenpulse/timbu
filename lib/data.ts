@@ -7,7 +7,7 @@ type ItemsNavProps = {
 export const ITEMS_NAV: ItemsNavProps[] = [
 	{
 		name: "shop",
-		label: "Shop",
+		label: "Shop All",
 		id: "1",
 	},
 	{
