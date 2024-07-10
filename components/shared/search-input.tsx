@@ -9,7 +9,7 @@ const SearchInput = (props: Props) => {
 	const { updateSearchTerm, updateShowSearch, show_search, searchTerm } =
 		useSearch();
 	return (
-		<div className=" overflow-hidden  flex items-center">
+		<div className="   flex items-center">
 			<AnimatePresence>
 				{show_search ? (
 					<motion.div

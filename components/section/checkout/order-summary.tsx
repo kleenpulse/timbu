@@ -1,6 +1,6 @@
 import CheckoutCard from "@/components/card/checkout-card";
 import { useCheckout } from "@/hooks/cart/use-checkout";
-import { cn } from "@/lib/utils";
+import { calculateDiscount, cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import React, { useState, useTransition } from "react";
 import EmptyCart from "../cart/empty-cart";
@@ -17,6 +17,17 @@ const OrderSummary = () => {
 	const { cart, updateShipping } = useCheckout();
 	if (cart.products.length === 0) return <EmptyCart />;
 	const products = cart.products;
+
+	const sub_total = cart.products.reduce(
+		(acc, item) =>
+			acc +
+			calculateDiscount({
+				price: item.price * item.item_count,
+				discount_percentage: item.discount_percentage,
+			}),
+		0
+	);
+
 	return (
 		<div className="w-full flex flex-col  gap-y-2 items-center">
 			<div className="flex w-full justify-between items-center bg-accent-white px-2 lg:px-4 py-2 lg:py-3 md:text-xl lg:text-2xl">
@@ -73,7 +84,8 @@ const OrderSummary = () => {
 					<div className="flex w-full items-center justify-between border border-gray-300 px-4 py-2  h-[50px]">
 						<span className="md:text-lg">Subtotal</span>
 						<span className="font-bold text-lg sm:text-xl md:text-2xl">
-							${cart.total}
+							${sub_total}
+							{/* ${cart.total} */}
 						</span>
 					</div>
 				</div>

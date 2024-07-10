@@ -29,11 +29,12 @@ const CartItems = (props: Props) => {
 		(acc, item) =>
 			acc +
 			calculateDiscount({
-				price: item.price,
+				price: item.price * item.item_count,
 				discount_percentage: item.discount_percentage,
 			}),
 		0
 	);
+	const total_item_count = cart.reduce((acc, item) => acc + item.item_count, 0);
 
 	return (
 		<div className="w-full flex flex-col md:flex-row md:justify-between md:items-start md:gap-x-8 xl:gap-x-16 gap-y-10">

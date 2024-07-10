@@ -10,6 +10,7 @@ const CheckoutCard = ({
 	price,
 	discount_percentage,
 	id,
+	item_count,
 }: ProductProps) => {
 	const { cart } = useCheckout();
 	const discount_price = calculateDiscount({ price, discount_percentage });
@@ -47,7 +48,7 @@ const CheckoutCard = ({
 				</div>
 			</div>
 			<p className="sm:text-2xl font-bold">
-				${calculateDiscount({ price, discount_percentage })}
+				${calculateDiscount({ price, discount_percentage }) * item_count}
 			</p>
 		</div>
 	);

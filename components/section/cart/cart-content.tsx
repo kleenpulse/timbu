@@ -21,7 +21,7 @@ const CartContent = (props: Props) => {
 
 	return (
 		<div className="w-full flex flex-col gap-y-8">
-			<div>
+			<div className="mt-6 sm:mt-2">
 				<BackButton />
 			</div>
 			<PageTitle title="Cart" count={cart.length} />

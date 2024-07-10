@@ -11,6 +11,7 @@ const CartCard = ({
 	price,
 	discount_percentage,
 	id,
+	item_count,
 }: ProductProps) => {
 	const { cart } = useCart();
 
@@ -45,7 +46,7 @@ const CartCard = ({
 				</div>
 			</div>
 			<p className="text-2xl font-bold">
-				${calculateDiscount({ price, discount_percentage })}
+				${calculateDiscount({ price, discount_percentage }) * item_count}
 			</p>
 		</div>
 	);

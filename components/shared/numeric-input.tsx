@@ -31,30 +31,12 @@ const NumericInput: React.FC<NumericInputProps> = ({
 		updateQuantityProduct(id, cart_item_count! + 1);
 		setValue((prevValue) => prevValue + 1);
 	};
-	useCallback(() => {
-		const og_price = product_item?.price;
-		const new_price = og_price! * value!;
-		useCart.setState((state) => ({
-			cart: state.cart.map((product) =>
-				product.id === id ? { ...product, price: new_price } : product
-			),
-		}));
-	}, [value]);
 
 	const handleDecrement = () => {
 		if (value > 1) {
 			setValue((prevValue) => prevValue - 1);
 			updateQuantity(id, cart_item_count! - 1);
 			updateQuantityProduct(id, cart_item_count! - 1);
-			const og_price = product_item?.price;
-			const new_price = og_price! / cart_item_count!;
-			setTimeout(() => {
-				useCart.setState((state) => ({
-					cart: state.cart.map((product) =>
-						product.id === id ? { ...product, price: new_price } : product
-					),
-				}));
-			}, 300);
 		}
 	};
 

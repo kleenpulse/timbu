@@ -17,6 +17,7 @@ const NumericInputCheckout: React.FC<NumericInputCheckoutProps> = ({
 	should_disable,
 }) => {
 	const { updateQuantity, cart } = useCheckout();
+	const { updateQuantity: updateQuantityCart } = useCart();
 
 	const cart_item = cart.products.find((product) => product.id === id);
 	const cart_item_count = cart_item?.item_count!;
@@ -24,19 +25,8 @@ const NumericInputCheckout: React.FC<NumericInputCheckoutProps> = ({
 
 	const handleIncrement = () => {
 		updateQuantity(id, cart_item_count! + 1);
-		// multiply product price by quantity
-		const og_price = cart_item?.price;
-		const new_price = og_price! * cart_item_count!;
-		setTimeout(() => {
-			useCheckout.setState({
-				cart: {
-					...cart,
-					products: cart.products.map((product) =>
-						product.id === id ? { ...product, price: new_price } : product
-					),
-				},
-			});
-		}, 300);
+
+		updateQuantityCart(id, cart_item_count! + 1);
 
 		setValue((prevValue) => prevValue + 1);
 	};
@@ -45,18 +35,8 @@ const NumericInputCheckout: React.FC<NumericInputCheckoutProps> = ({
 		if (value > 1) {
 			setValue((prevValue) => prevValue - 1);
 			updateQuantity(id, cart_item_count! - 1);
-			const og_price = cart_item?.price;
-			const new_price = og_price! / cart_item_count!;
-			setTimeout(() => {
-				useCheckout.setState({
-					cart: {
-						...cart,
-						products: cart.products.map((product) =>
-							product.id === id ? { ...product, price: new_price } : product
-						),
-					},
-				});
-			}, 300);
+
+			updateQuantityCart(id, cart_item_count! - 1);
 		}
 	};
 
@@ -67,6 +47,8 @@ const NumericInputCheckout: React.FC<NumericInputCheckoutProps> = ({
 			setValue(newValue);
 
 			updateQuantity(id, newValue);
+
+			updateQuantityCart(id, newValue);
 		}
 	};
 
