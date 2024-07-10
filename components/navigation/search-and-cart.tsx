@@ -13,7 +13,7 @@ const SearchAndCart = ({
 	has_search?: boolean;
 }) => {
 	return (
-		<div className={cn("flex items-center gap-x-4 sm:gap-x-8", className)}>
+		<div className={cn("flex items-center gap-x-4 sm:gap-x-5", className)}>
 			{has_search && <SearchInput />}
 
 			<CartButton />
