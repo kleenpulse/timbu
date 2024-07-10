@@ -14,13 +14,16 @@ const CartItems = (props: Props) => {
 	const router = useRouter();
 	const { cart } = useCart();
 	const { addToCheckout } = useCheckout();
-	const [delivery, setDelivery] = useState<"door" | "station">("door");
+	const {
+		cart: { shipping },
+		updateShipping,
+	} = useCheckout();
 
 	if (cart.length === 0) return <EmptyCart />;
 	const handleCheckout = () => {
 		addToCheckout({
 			products: cart,
-			shipping: delivery,
+			shipping,
 			total: sub_total,
 		});
 		router.push("/checkout");
@@ -45,20 +48,20 @@ const CartItems = (props: Props) => {
 			</div>
 			<div className="flex flex-col gap-y-8 md:gap-y-12 flex-shrink-0 ">
 				<button
-					onClick={() => setDelivery("door")}
+					onClick={() => updateShipping("door")}
 					className={cn(
 						"flex flex-col items-center justify-center border border-gray-300 px-4 md:px-16 py-3 lg:px-20 xl:px-24 hover:bg-accent-primary/50 hover:border-accent-border ",
-						delivery === "door" && "bg-accent-primary/50 border-accent-border"
+						shipping === "door" && "bg-accent-primary/50 border-accent-border"
 					)}
 				>
 					<DoorDeliveryIcon />
 					<span>Door Delivery</span>
 				</button>
 				<button
-					onClick={() => setDelivery("station")}
+					onClick={() => updateShipping("station")}
 					className={cn(
 						"flex flex-col items-center justify-center border border-gray-300 px-4 md:px-16 py-3 lg:px-20 xl:px-24 hover:bg-accent-primary/50 hover:border-accent-border ",
-						delivery === "station" &&
+						shipping === "station" &&
 							"bg-accent-primary/50 border-accent-border"
 					)}
 				>

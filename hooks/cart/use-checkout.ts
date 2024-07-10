@@ -4,8 +4,8 @@ import { persist, PersistStorage } from "zustand/middleware";
 
 type CartProps = {
 	products: ProductProps[];
-	shipping: "door" | "station";
 	total: number;
+	shipping: "door" | "station";
 };
 type StateProps = {
 	cart: CartProps;

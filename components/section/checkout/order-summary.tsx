@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import CheckoutCard from "@/components/card/checkout-card";
 import { useCheckout } from "@/hooks/cart/use-checkout";
 import { calculateDiscount, cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import EmptyCart from "../cart/empty-cart";
 import DeliveryAndPayment from "./delivery-and-payment";
+import { useCart } from "@/hooks/cart/use-cart";
 
 const SHIPPING = [
 	{ value: "door", label: "Door Delivery" },
@@ -15,7 +17,12 @@ const OrderSummary = () => {
 	const [isPending, startTransition] = useTransition();
 	const [text, setText] = useState("");
 	const { cart, updateShipping } = useCheckout();
-	if (cart.products.length === 0) return <EmptyCart />;
+
+	useEffect(() => {
+		updateShipping(cart.shipping);
+	}, [cart.shipping]);
+
+	if (cart.products.length === 0) return <EmptyCart title="Checkout" />;
 	const products = cart.products;
 
 	const sub_total = cart.products.reduce(

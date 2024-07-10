@@ -4,6 +4,7 @@ import { persist, PersistStorage } from "zustand/middleware";
 
 type StateProps = {
 	cart: ProductProps[];
+
 	addToCart: (product: ProductProps) => void;
 	removeFromCart: (product: ProductProps) => void;
 	updateQuantity: (productId: ProductProps["id"], quantity: number) => void;
