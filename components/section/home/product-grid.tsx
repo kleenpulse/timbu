@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import ProductCard from "@/components/card/product-card";
 import LoadingSpinner from "@/components/miscellaneous/LoadingSpinner";
+import NoProduct from "@/components/shared/no-product";
 import { useSearch } from "@/hooks/filters/use-search";
 import { useProduct } from "@/hooks/product/use-product";
 import useWindowWidth from "@/hooks/util-hooks/use-window-width";
@@ -70,7 +71,10 @@ const ProductGrid = (props: Props) => {
 	}, []);
 
 	return (
-		<div className="w-full min-h-screen">
+		<div className="w-full min-h-[500px] relative">
+			{filteredProducts.length === 0 && searchTerm.length > 1 && (
+				<NoProduct text={searchTerm} image="/no-product.webp" />
+			)}
 			<motion.div
 				initial="productCards"
 				animate="whileInView"
