@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import ProductCard from "@/components/card/product-card";
 import LoadingSpinner from "@/components/miscellaneous/LoadingSpinner";
+import { useSearch } from "@/hooks/filters/use-search";
 import { useProduct } from "@/hooks/product/use-product";
 import useWindowWidth from "@/hooks/util-hooks/use-window-width";
 import { ProductProps } from "@/lib/products";
 import { AnimatePresence, motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 type Props = {};
 const Pagination = dynamic(() => import("react-paginate"), {
@@ -19,6 +20,8 @@ const ProductGrid = (props: Props) => {
 	const [currentPage, setCurrentPage] = useState(0);
 	const { winWidth } = useWindowWidth();
 	const [perPage, setPerPage] = useState(winWidth < 600 ? "3" : "12");
+	const { updateSearchTerm, updateShowSearch, show_search, searchTerm } =
+		useSearch();
 
 	useEffect(() => {
 		if (winWidth < 640) {
@@ -42,11 +45,21 @@ const ProductGrid = (props: Props) => {
 		window?.scrollTo({ top: 0, behavior: "smooth" });
 	};
 
+	// filter by search term
+	const filteredProducts = useMemo(() => {
+		return PRODUCTS.filter((product) => {
+			if (!(searchTerm.length > 1) || PRODUCTS.length < 1) {
+				return product;
+			}
+			return product.title.toLowerCase().includes(searchTerm.toLowerCase());
+		});
+	}, [PRODUCTS, searchTerm]);
+
 	useEffect(() => {
-		if (PRODUCTS.length < 1) return;
-		setTotalPages(Math.ceil(PRODUCTS.length / Number(perPage)));
-		setSubset(PRODUCTS.slice(startIndex, endIndex));
-	}, [PRODUCTS, perPage]);
+		if (filteredProducts.length < 1) return;
+		setTotalPages(Math.ceil(filteredProducts.length / Number(perPage)));
+		setSubset(filteredProducts.slice(startIndex, endIndex));
+	}, [filteredProducts, perPage, startIndex, endIndex]);
 
 	useEffect(() => {
 		const perPage = localStorage.getItem("perPage");
@@ -63,40 +76,50 @@ const ProductGrid = (props: Props) => {
 				animate="whileInView"
 				whileInView="whileInView"
 				transition={{ duration: 0.3, staggerChildren: 0.2 }}
-				className="w-full sm:grid  sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 xl:gap-x-8 min-[1440px]:gap-x-10 gap-y-8 lg:gap-y-12 xl:gap-y-16 relative items-center flex flex-col"
+				className="w-full sm:grid  sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 xl:gap-x-8 min-[1440px]:gap-x-10 gap-y-8 lg:gap-y-12 xl:gap-y-16 relative items-center flex flex-col overflow-hidden"
 			>
 				<AnimatePresence>
-					{subset.length > 0 &&
+					{filteredProducts.length > 0 &&
+						subset.length > 0 &&
 						subset.map((product) => (
 							<ProductCard key={product.id} {...product} />
 						))}
 				</AnimatePresence>
 			</motion.div>
-			<div className="mt-8 md:mt-12 lg:mt-16 flex w-full justify-center">
-				{totalPages > 1 && (
-					<Pagination
-						breakLabel="..."
-						nextLabel="Next "
-						previousLabel=" Previous"
-						previousAriaLabel="Previous"
-						nextAriaLabel="Next"
-						pageCount={totalPages}
-						// onPageChange={({ selected }) => setCurrentPage(selected)}
-						onPageChange={handlePageChange}
-						pageRangeDisplayed={3}
-						marginPagesDisplayed={2}
-						className="flex select-none items-center justify-center rounded-md  px-4"
-						pageClassName="w-8 h-8 flex justify-center items-center  "
-						previousClassName="pr-2 lg:pr-4 text-accent-orange  font-medium"
-						nextClassName="pl-2 lg:pl-4 text-accent-orange font-medium"
-						pageLinkClassName="  w-full h-full flex items-center justify-center"
-						activeClassName="bg-accent-orange !text-white  font-medium rounded-md"
-						renderOnZeroPageCount={null}
-						disabledClassName="cursor-not-allowed opacity-70"
-						disabledLinkClassName="cursor-not-allowed opacity-70"
-					/>
+			<AnimatePresence>
+				{filteredProducts.length > 0 && (
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: 20 }}
+						className="mt-8 md:mt-12 lg:mt-16 flex w-full justify-center"
+					>
+						{totalPages > 1 && (
+							<Pagination
+								breakLabel="..."
+								nextLabel="Next "
+								previousLabel=" Previous"
+								previousAriaLabel="Previous"
+								nextAriaLabel="Next"
+								pageCount={totalPages}
+								// onPageChange={({ selected }) => setCurrentPage(selected)}
+								onPageChange={handlePageChange}
+								pageRangeDisplayed={3}
+								marginPagesDisplayed={2}
+								className="flex select-none items-center justify-center rounded-md  px-4"
+								pageClassName="w-8 h-8 flex justify-center items-center  "
+								previousClassName="pr-2 lg:pr-4 text-accent-orange  font-medium"
+								nextClassName="pl-2 lg:pl-4 text-accent-orange font-medium"
+								pageLinkClassName="  w-full h-full flex items-center justify-center"
+								activeClassName="bg-accent-orange !text-white  font-medium rounded-md"
+								renderOnZeroPageCount={null}
+								disabledClassName="cursor-not-allowed opacity-70"
+								disabledLinkClassName="cursor-not-allowed opacity-70"
+							/>
+						)}
+					</motion.div>
 				)}
-			</div>
+			</AnimatePresence>
 		</div>
 	);
 };

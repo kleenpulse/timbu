@@ -4,6 +4,7 @@ import StarIcon from "../icons/starIcon";
 import { calculateDiscount, cn } from "@/lib/utils";
 import { ProductProps } from "@/lib/products";
 import { AnimatePresence, motion } from "framer-motion";
+import { useSearch } from "@/hooks/filters/use-search";
 
 const ProductCard = ({
 	id,
@@ -13,6 +14,9 @@ const ProductCard = ({
 	price,
 	is_in_stock,
 }: ProductProps) => {
+	const { updateSearchTerm, updateShowSearch, show_search, searchTerm } =
+		useSearch();
+
 	return (
 		<motion.a
 			href={`/${id}`}
@@ -34,6 +38,8 @@ const ProductCard = ({
 			}}
 			viewport={{ once: true }}
 			className="w-full max-w-[340px] max-sm:max-w-[250px] flex-col flex gap-y-2"
+			layout
+			layoutId={`product-card-${id}`}
 		>
 			<div className="flex flex-col bg-accent-card items-center pb-4 md:pb-7">
 				{is_in_stock ? (
@@ -68,7 +74,30 @@ const ProductCard = ({
 					))}
 					<span>4 (5)</span>
 				</p>
-				<p>{title}</p>
+
+				<span>
+					{searchTerm.length > 1 ? (
+						<span
+							className={cn(
+								"",
+								searchTerm.length > 2 ? "w-[50px] overflow-x-auto" : ""
+							)}
+							dangerouslySetInnerHTML={{
+								__html: title!.replace(
+									new RegExp(`(${searchTerm})`, "gi"),
+									(match, group) =>
+										`<span  style="color: black; background-color: ${
+											group.toLowerCase() === searchTerm.toLowerCase()
+												? "yellow"
+												: "inherit"
+										}">${match}</span>`
+								),
+							}}
+						/>
+					) : (
+						<span>{title}</span>
+					)}
+				</span>
 				<p className="flex gap-x-2">
 					<span className="line-through">${price}</span>
 					<b className="text-accent-primary">

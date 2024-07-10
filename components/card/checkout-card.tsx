@@ -1,9 +1,6 @@
-import React from "react";
 import BlurImage from "../miscellaneous/blur-image";
-import NumericInput from "../shared/numeric-input";
 import { ProductProps } from "@/lib/products";
 import { calculateDiscount } from "@/lib/utils";
-import { useCart } from "@/hooks/cart/use-cart";
 import { useCheckout } from "@/hooks/cart/use-checkout";
 import NumericInputCheckout from "../shared/numeric-input-checkout";
 
