@@ -37,7 +37,7 @@ const ProductCard = ({
 				damping: 30,
 			}}
 			viewport={{ once: true }}
-			className="w-full max-w-[340px] max-sm:max-w-[250px] flex-col flex gap-y-2"
+			className="w-full max-w-[340px] max-sm:max-w-[250px] flex-col flex gap-y-2 hover:opacity-80 transition"
 			layout
 			layoutId={`product-card-${id}`}
 		>
