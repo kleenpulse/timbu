@@ -37,12 +37,15 @@ const MoreProductDetails = ({ data }: { data: ProductProps }) => {
 			{DETAILS.map((item, index) => (
 				<li
 					key={item.id}
-					onClick={() => toggleAnswer(index)}
 					className={cn(
 						"flex flex-col  transition-all duration-300 relative z-30 overflow-hidden "
 					)}
 				>
-					<div className="w-full flex items-start   gap-x-4 bg-accent-white lg:p-6x p-4 relative ">
+					<div
+						role="button"
+						onClick={() => toggleAnswer(index)}
+						className="w-full flex items-start   gap-x-4 bg-accent-white lg:p-6x p-4 relative "
+					>
 						<p
 							className={cn(
 								"  text-left  transition-colors duration-300",

@@ -70,8 +70,8 @@ const NumericInputCheckout: React.FC<NumericInputCheckoutProps> = ({
 				type="number"
 				value={value}
 				onChange={handleChange}
-				disabled={should_disable}
-				className="sm:w-12 text-center  py-1  rounded bg-transparent font-medium text-2xl disabled:cursor-not-allowed"
+				disabled
+				className="sm:w-12 text-center  py-1  rounded bg-transparent font-medium text-2xl disabled:cursor-default"
 				min="0"
 				max="9"
 			/>

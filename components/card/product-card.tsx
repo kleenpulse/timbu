@@ -37,11 +37,11 @@ const ProductCard = ({
 				damping: 30,
 			}}
 			viewport={{ once: true }}
-			className="w-full max-w-[340px] max-sm:max-w-[250px] flex-col flex gap-y-2 hover:opacity-80 transition"
+			className="w-full max-w-[340px] max-sm:max-w-[250px] flex-col flex gap-y-2 "
 			layout
 			layoutId={`product-card-${id}`}
 		>
-			<div className="flex flex-col bg-accent-card items-center pb-4 md:pb-7">
+			<div className="flex flex-col bg-accent-card items-center pb-4 md:pb-7 hover:scale-95 transition hover:duration-300">
 				{is_in_stock ? (
 					<span className="bg-accent-white w-fit px-2 py-1 md:px-3 self-start">
 						Save {discount_percentage}%
