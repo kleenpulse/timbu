@@ -1,9 +1,9 @@
-import { type ProductData } from "@/types/products.types";
+import { type ServerProducts } from "@/types/products.types";
 import { create } from "zustand";
 import { persist, PersistStorage } from "zustand/middleware";
 
 type CartProps = {
-	products: ProductData[];
+	products: ServerProducts[];
 	total: number;
 	shipping: "door" | "station";
 };
@@ -11,9 +11,10 @@ type StateProps = {
 	cart: CartProps;
 	addToCheckout: (cart: CartProps) => void;
 	updateShipping: (shipping: "door" | "station") => void;
-	removeFromCheckout: (product: ProductData) => void;
-	updateQuantity: (productId: ProductData["id"], quantity: number) => void;
+	removeFromCheckout: (product: ServerProducts) => void;
+	updateQuantity: (productId: ServerProducts["id"], quantity: number) => void;
 	clearCart: () => void;
+	updateTotal: (total: number) => void;
 };
 
 const storage: PersistStorage<StateProps> = {
@@ -28,7 +29,7 @@ const storage: PersistStorage<StateProps> = {
 	removeItem: (name) => localStorage.removeItem(name),
 };
 
-export const useCheckout = create<StateProps>()(
+export const useServerCheckout = create<StateProps>()(
 	persist(
 		(set) => ({
 			cart: {
@@ -37,6 +38,8 @@ export const useCheckout = create<StateProps>()(
 				total: 0,
 			},
 
+			updateTotal: (total) =>
+				set((state) => ({ cart: { ...state.cart, total } })),
 			addToCheckout: (cart) =>
 				set((state) => {
 					const existingProducts = state.cart.products.map(

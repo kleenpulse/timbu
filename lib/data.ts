@@ -25,11 +25,6 @@ export const ITEMS_NAV: ItemsNavProps[] = [
 		label: "Make-up",
 		id: "4",
 	},
-	{
-		name: "shop_by_concern",
-		label: "Shop by Concern",
-		id: "5",
-	},
 ];
 type FooterLinkProps = {
 	title: string;

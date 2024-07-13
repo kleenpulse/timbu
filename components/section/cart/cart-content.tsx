@@ -6,11 +6,12 @@ import CartItems from "./cart-items";
 import SimilarProducts from "../product-details/similar-products";
 import { useCart } from "@/hooks/cart/use-cart";
 import PageTitle from "@/components/shared/page-title";
+import { useServerCart } from "@/hooks/cart/use-server-cart";
 
 type Props = {};
 
 const CartContent = (props: Props) => {
-	const { cart } = useCart();
+	const { cart } = useServerCart();
 	const ids_array = cart.map((item) => item.id);
 
 	useEffect(() => {

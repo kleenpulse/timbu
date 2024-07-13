@@ -1,23 +1,25 @@
 import BlurImage from "../miscellaneous/blur-image";
 import { ProductProps } from "@/lib/products";
-import { calculateDiscount } from "@/lib/utils";
+import { calculateDiscount, formatPrice } from "@/lib/utils";
 import { useCheckout } from "@/hooks/cart/use-checkout";
 import NumericInputCheckout from "../shared/numeric-input-checkout";
+import { ServerProducts } from "@/types/products.types";
+import { useServerCheckout } from "@/hooks/cart/use-server-checkout";
 
 const CheckoutCard = ({
-	image,
-	title,
-	price,
-	discount_percentage,
 	id,
+	name,
+	current_price,
+	price,
+	image,
 	item_count,
-}: ProductProps) => {
-	const { cart } = useCheckout();
-	const discount_price = calculateDiscount({ price, discount_percentage });
+}: ServerProducts & { image: string }) => {
+	const { cart } = useServerCheckout();
+
 	const handleItemRemove = () => {
-		const new_price = cart.total - discount_price;
+		const new_price = cart.total - current_price[0].USD[0] * item_count;
 		const newCart = cart.products.filter((item) => item.id !== id);
-		useCheckout.setState({
+		useServerCheckout.setState({
 			cart: { ...cart, products: newCart, total: new_price },
 		});
 	};
@@ -37,7 +39,7 @@ const CheckoutCard = ({
 					/>
 				</div>
 				<div className="flex flex-col gap-y-4 items-start">
-					<p className="md:text-xl lg:text-2xl">{title}</p>
+					<p className="md:text-xl lg:text-2xl">{name}</p>
 					<NumericInputCheckout id={id} should_disable={false} />
 					<button
 						className="text-accent-orange md:text-lg"
@@ -48,7 +50,7 @@ const CheckoutCard = ({
 				</div>
 			</div>
 			<p className="sm:text-2xl font-bold">
-				${calculateDiscount({ price, discount_percentage }) * item_count}
+				{formatPrice(current_price[0].USD[0] * item_count)}
 			</p>
 		</div>
 	);

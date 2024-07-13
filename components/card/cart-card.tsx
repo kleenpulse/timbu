@@ -2,22 +2,24 @@ import React from "react";
 import BlurImage from "../miscellaneous/blur-image";
 import NumericInput from "../shared/numeric-input";
 import { ProductProps } from "@/lib/products";
-import { calculateDiscount } from "@/lib/utils";
+import { calculateDiscount, formatPrice } from "@/lib/utils";
 import { useCart } from "@/hooks/cart/use-cart";
+import { useServerCart } from "@/hooks/cart/use-server-cart";
+import { ServerProducts } from "@/types/products.types";
 
 const CartCard = ({
-	image,
-	title,
-	price,
-	discount_percentage,
 	id,
+	name,
+	current_price,
+	price,
+	image,
 	item_count,
-}: ProductProps) => {
-	const { cart } = useCart();
+}: ServerProducts & { image: string }) => {
+	const { cart } = useServerCart();
 
 	const handleItemRemove = () => {
 		const newCart = cart.filter((item) => item.id !== id);
-		useCart.setState({ cart: newCart });
+		useServerCart.setState({ cart: newCart });
 	};
 
 	return (
@@ -35,7 +37,7 @@ const CartCard = ({
 					/>
 				</div>
 				<div className="flex flex-col gap-y-4 items-start">
-					<p className="md:text-2xl">{title}</p>
+					<p className="md:text-2xl">{name}</p>
 					<NumericInput id={id} should_disable={false} />
 					<button
 						className="text-accent-orange md:text-lg"
@@ -46,7 +48,7 @@ const CartCard = ({
 				</div>
 			</div>
 			<p className="text-2xl font-bold">
-				${calculateDiscount({ price, discount_percentage }) * item_count}
+				{formatPrice(current_price[0].USD[0] * item_count)}
 			</p>
 		</div>
 	);

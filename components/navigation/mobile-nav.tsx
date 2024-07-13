@@ -22,7 +22,7 @@ const MobileNav = () => {
 	};
 
 	return (
-		<div className="w-full flex justify-between items-center sm:hidden pt-4 relative">
+		<div className="w-full flex justify-between items-center min-[690px]:hidden pt-4 relative">
 			<button onClick={() => updateNavOpen(!navOpen)}>
 				{navOpen ? <X /> : <BurgerMenuIcon />}
 			</button>
@@ -42,7 +42,7 @@ const MobileNav = () => {
 						/>
 						<div
 							ref={overlayRef}
-							className="flex flex-col bg-white h-[300px] w-full max-w-[200px] items-start relative p-4 gap-y-5 z-20 shadow-black/10 shadow-xl	"
+							className="flex flex-col bg-white h-[220px] w-full min-[500px]:max-w-[170px] max-w-[150px] items-start relative p-4 gap-y-5 z-20 shadow-black/10 shadow-xl	"
 						>
 							{ITEMS_NAV.map((item) => (
 								<button

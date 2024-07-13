@@ -1,5 +1,7 @@
 import { useCart } from "@/hooks/cart/use-cart";
 import { useCheckout } from "@/hooks/cart/use-checkout";
+import { useServerCart } from "@/hooks/cart/use-server-cart";
+import { useServerCheckout } from "@/hooks/cart/use-server-checkout";
 import { useProduct } from "@/hooks/product/use-product";
 import { ProductProps } from "@/lib/products";
 import { cn } from "@/lib/utils";
@@ -16,8 +18,8 @@ const NumericInputCheckout: React.FC<NumericInputCheckoutProps> = ({
 	id,
 	should_disable,
 }) => {
-	const { updateQuantity, cart } = useCheckout();
-	const { updateQuantity: updateQuantityCart } = useCart();
+	const { updateQuantity, cart } = useServerCheckout();
+	const { updateQuantity: updateQuantityCart } = useServerCart();
 
 	const cart_item = cart.products.find((product) => product.id === id);
 	const cart_item_count = cart_item?.item_count!;
@@ -51,7 +53,7 @@ const NumericInputCheckout: React.FC<NumericInputCheckoutProps> = ({
 			updateQuantityCart(id, newValue);
 		}
 	};
-
+	const count_is_ten = value === 10 || cart_item_count === 10;
 	return (
 		<div
 			className={cn(
@@ -77,7 +79,7 @@ const NumericInputCheckout: React.FC<NumericInputCheckoutProps> = ({
 			/>
 			<button
 				onClick={handleIncrement}
-				disabled={should_disable}
+				disabled={should_disable || count_is_ten}
 				className="disabled:cursor-not-allowed px-1 text-gray-700 rounded  text-2xl hover:scale-110"
 			>
 				+

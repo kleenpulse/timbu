@@ -16,14 +16,15 @@ const SearchInput = (props: Props) => {
 						initial={{ y: 20 }}
 						animate={{ y: 0 }}
 						exit={{ y: 20 }}
-						className="border outline-none relative"
+						className="border border-accent-black outline-none relative"
 					>
 						<input
 							onChange={(e) => updateSearchTerm(e.target.value)}
 							value={searchTerm}
 							type="text"
 							autoFocus
-							className="  py-0.5 bg-secondary px-4 pr-6  placeholder:text-gray-400 outline-none focus-within:border-gray-500 focus-within:outline-accent-primary text-sm"
+							className="  py-0.5 bg-secondary px-4 pr-6  placeholder:text-gray-400 outline-none focus-within:border-gray-500 focus-within:outline-accent-primary text-sm placeholder:font-light"
+							placeholder="Type to search products"
 						/>
 						<button
 							className="absolute right-1 top-1/2 -translate-y-1/2 text-accent-border"

@@ -1,19 +1,17 @@
-import React from "react";
 import BlurImage from "../miscellaneous/blur-image";
 import StarIcon from "../icons/starIcon";
-import { calculateDiscount, cn } from "@/lib/utils";
-import { ProductProps } from "@/lib/products";
-import { AnimatePresence, motion } from "framer-motion";
+import { cn, formatPrice } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { useSearch } from "@/hooks/filters/use-search";
+import { ServerProducts } from "@/types/products.types";
 
 const ProductCard = ({
 	id,
-	title,
+	name,
+	photos,
+	current_price,
 	image,
-	discount_percentage,
-	price,
-	is_in_stock,
-}: ProductProps) => {
+}: ServerProducts & { image: string }) => {
 	const { updateSearchTerm, updateShowSearch, show_search, searchTerm } =
 		useSearch();
 
@@ -41,13 +39,13 @@ const ProductCard = ({
 			layout
 			layoutId={`product-card-${id}`}
 		>
-			<div className="flex flex-col bg-accent-card items-center pb-4 md:pb-7 hover:scale-95 transition hover:duration-300">
-				{is_in_stock ? (
-					<span className="bg-accent-white w-fit px-2 py-1 md:px-3 self-start">
-						Save {discount_percentage}%
+			<div className="flex flex-col bg-accent-card items-center py-4 md:py-7x hover:scale-95 transition hover:duration-300">
+				{true ? (
+					<span className="bg-accent-white w-fit px-2 py-1 md:px-3 self-start hidden">
+						{/* Save {discount_percentage}% */}
 					</span>
 				) : (
-					<span className="bg-accent-white w-fit px-2 py-1 md:px-3 self-start">
+					<span className="bg-accent-white w-fit px-2 py-1 md:px-3 self-start hidden">
 						Sold out
 					</span>
 				)}
@@ -83,7 +81,7 @@ const ProductCard = ({
 								searchTerm.length > 2 ? "w-[50px] overflow-x-auto" : ""
 							)}
 							dangerouslySetInnerHTML={{
-								__html: title!.replace(
+								__html: name!.replace(
 									new RegExp(`(${searchTerm})`, "gi"),
 									(match, group) =>
 										`<span  style="color: black; background-color: ${
@@ -95,14 +93,16 @@ const ProductCard = ({
 							}}
 						/>
 					) : (
-						<span>{title}</span>
+						<span>{name}</span>
 					)}
 				</span>
 				<p className="flex gap-x-2">
-					<span className="line-through">${price}</span>
-					<b className="text-accent-primary">
-						${calculateDiscount({ price, discount_percentage })}
-					</b>
+					<span className=" font-bold md:text-lg">
+						{formatPrice(current_price[0].USD[0])}
+					</span>
+					{/* <b className="text-accent-primary">
+						$${calculateDiscount({ price, discount_percentage })}
+					</b> */}
 				</p>
 			</div>
 		</motion.a>

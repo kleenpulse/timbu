@@ -1,13 +1,13 @@
-import { ProductData } from "@/types/products.types";
+import { ServerProducts } from "@/types/products.types";
 import { create } from "zustand";
 import { persist, PersistStorage } from "zustand/middleware";
 
 type StateProps = {
-	cart: ProductData[];
+	cart: ServerProducts[];
 
-	addToCart: (product: ProductData) => void;
-	removeFromCart: (product: ProductData) => void;
-	updateQuantity: (productId: ProductData["id"], quantity: number) => void;
+	addToCart: (product: ServerProducts) => void;
+	removeFromCart: (product: ServerProducts) => void;
+	updateQuantity: (productId: ServerProducts["id"], quantity: number) => void;
 	clearCart: () => void;
 };
 
@@ -23,7 +23,7 @@ const storage: PersistStorage<StateProps> = {
 	removeItem: (name) => localStorage.removeItem(name),
 };
 
-export const useCart = create<StateProps>()(
+export const useServerCart = create<StateProps>()(
 	persist(
 		(set) => ({
 			cart: [],

@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import CheckoutCard from "@/components/card/checkout-card";
 import { useCheckout } from "@/hooks/cart/use-checkout";
-import { calculateDiscount, cn } from "@/lib/utils";
+import { calculateDiscount, cn, formatPrice } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useMemo, useState, useTransition } from "react";
 import EmptyCart from "../cart/empty-cart";
 import DeliveryAndPayment from "./delivery-and-payment";
 import { useCart } from "@/hooks/cart/use-cart";
+import { useServerCheckout } from "@/hooks/cart/use-server-checkout";
 
 const SHIPPING = [
 	{ value: "door", label: "Door Delivery" },
@@ -16,24 +17,21 @@ const SHIPPING = [
 const OrderSummary = () => {
 	const [isPending, startTransition] = useTransition();
 	const [text, setText] = useState("");
-	const { cart, updateShipping } = useCheckout();
+	const { cart, updateShipping, updateTotal } = useServerCheckout();
 
 	useEffect(() => {
 		updateShipping(cart.shipping);
 	}, [cart.shipping]);
 
-	if (cart.products.length === 0) return <EmptyCart title="Checkout" />;
-	const products = cart.products;
-
 	const sub_total = cart.products.reduce(
-		(acc, item) =>
-			acc +
-			calculateDiscount({
-				price: item.price * item.item_count,
-				discount_percentage: item.discount_percentage,
-			}),
+		(acc, item) => acc + item.current_price[0].USD[0] * item.item_count,
 		0
 	);
+	useEffect(() => {
+		updateTotal(sub_total);
+	}, [sub_total]);
+	if (cart.products.length === 0) return <EmptyCart title="Checkout" />;
+	const products = cart.products;
 
 	return (
 		<div className="w-full flex flex-col  gap-y-2 items-center">
@@ -44,7 +42,11 @@ const OrderSummary = () => {
 			<div className="w-full flex flex-col md:flex-row md:justify-between md:items-start gap-x-8 xl:gap-x-12 gap-y-12">
 				<div className="flex flex-col gap-y-10 w-full max-h-[400px] xl:max-h-[600px] overflow-y-auto cart__scroll">
 					{products.map((item) => (
-						<CheckoutCard key={item.id} {...item} />
+						<CheckoutCard
+							key={item.id}
+							{...item}
+							image={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${item.photos[0].url}`}
+						/>
 					))}
 				</div>
 				<div className="flex flex-col gap-y-8 md:gap-y-12 flex-shrink-x0 w-full max-w-[302px] xl:max-w-[359px] h-full justify-between  md:min-h-[425px] ">
@@ -91,7 +93,7 @@ const OrderSummary = () => {
 					<div className="flex w-full items-center justify-between border border-gray-300 px-4 py-2  h-[50px]">
 						<span className="md:text-lg">Subtotal</span>
 						<span className="font-bold text-lg sm:text-xl md:text-2xl">
-							${sub_total}
+							{formatPrice(sub_total)}
 							{/* ${cart.total} */}
 						</span>
 					</div>

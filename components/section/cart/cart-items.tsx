@@ -4,20 +4,23 @@ import StationIcon from "@/components/icons/station-icon";
 import { useCart } from "@/hooks/cart/use-cart";
 import React, { useState } from "react";
 import EmptyCart from "./empty-cart";
-import { calculateDiscount, cn } from "@/lib/utils";
+import { calculateDiscount, cn, formatPrice } from "@/lib/utils";
 import { useCheckout } from "@/hooks/cart/use-checkout";
 import { useRouter } from "next/navigation";
+import { useServerCart } from "@/hooks/cart/use-server-cart";
+import { useServerCheckout } from "@/hooks/cart/use-server-checkout";
 
 type Props = {};
 
 const CartItems = (props: Props) => {
 	const router = useRouter();
-	const { cart } = useCart();
-	const { addToCheckout } = useCheckout();
+	const { cart } = useServerCart();
+
 	const {
 		cart: { shipping },
 		updateShipping,
-	} = useCheckout();
+		addToCheckout,
+	} = useServerCheckout();
 
 	if (cart.length === 0) return <EmptyCart />;
 	const handleCheckout = () => {
@@ -29,12 +32,7 @@ const CartItems = (props: Props) => {
 		router.push("/checkout");
 	};
 	const sub_total = cart.reduce(
-		(acc, item) =>
-			acc +
-			calculateDiscount({
-				price: item.price * item.item_count,
-				discount_percentage: item.discount_percentage,
-			}),
+		(acc, item) => acc + item.current_price[0].USD[0] * item.item_count,
 		0
 	);
 	const total_item_count = cart.reduce((acc, item) => acc + item.item_count, 0);
@@ -43,7 +41,11 @@ const CartItems = (props: Props) => {
 		<div className="w-full flex flex-col md:flex-row md:justify-between md:items-start md:gap-x-8 xl:gap-x-16 gap-y-10">
 			<div className="flex flex-col gap-y-10 w-full max-h-[400px] xl:max-h-[600px] overflow-y-auto cart__scroll">
 				{cart.map((item) => (
-					<CartCard key={item.id} {...item} />
+					<CartCard
+						key={item.id}
+						{...item}
+						image={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${item.photos[0].url}`}
+					/>
 				))}
 			</div>
 			<div className="flex flex-col gap-y-8 md:gap-y-12 flex-shrink-0 ">
@@ -71,7 +73,7 @@ const CartItems = (props: Props) => {
 				<div className="flex w-full items-center justify-between border border-gray-300 px-4 py-2 md:py-4">
 					<span className="md:text-lg">Subtotal</span>
 					<span className="font-bold text-lg sm:text-xl md:text-2xl">
-						${sub_total}
+						{formatPrice(sub_total)}
 					</span>
 				</div>
 				<button

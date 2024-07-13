@@ -2,7 +2,7 @@
 
 import NavBanner from "@/components/global/nav-banner";
 import ItemsNav from "@/components/navigation/items-nav";
-import { useProduct } from "@/hooks/product/use-product";
+import { useProduct } from "@/server/single-product.data";
 
 import dynamic from "next/dynamic";
 
@@ -18,8 +18,7 @@ const ProductPage = ({
 }: {
 	params: { productId: string };
 }) => {
-	const { products } = useProduct();
-	const data = products.find((product) => product.id === productId);
+	if (!productId) return null;
 
 	return (
 		<div className="w-full flex flex-col">
@@ -27,7 +26,7 @@ const ProductPage = ({
 			<section className="w-full px-4 min-h-[400px] xl:min-h-[500px]">
 				<ItemsNav />
 				{/* <MobileNav /> */}
-				<ProductDetailsContent data={data!} />
+				<ProductDetailsContent id={productId} />
 			</section>
 		</div>
 	);

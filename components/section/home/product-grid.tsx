@@ -4,8 +4,10 @@ import LoadingSpinner from "@/components/miscellaneous/LoadingSpinner";
 import NoProduct from "@/components/shared/no-product";
 import { useSearch } from "@/hooks/filters/use-search";
 import { useProduct } from "@/hooks/product/use-product";
+import { useServerProduct } from "@/hooks/product/use-server-product";
 import useWindowWidth from "@/hooks/util-hooks/use-window-width";
 import { ProductProps } from "@/lib/products";
+import { ProductData, ServerProducts } from "@/types/products.types";
 import { AnimatePresence, motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import React, { useEffect, useMemo, useState } from "react";
@@ -16,7 +18,8 @@ const Pagination = dynamic(() => import("react-paginate"), {
 	loading: () => <LoadingSpinner />,
 });
 const ProductGrid = (props: Props) => {
-	const { products: PRODUCTS } = useProduct();
+	// const { products: PRODUCTS } = useProduct();
+	const { products: PRODUCTS } = useServerProduct();
 	const [totalPages, setTotalPages] = useState(0);
 	const [currentPage, setCurrentPage] = useState(0);
 	const { winWidth } = useWindowWidth();
@@ -36,7 +39,7 @@ const ProductGrid = (props: Props) => {
 		}
 	}, [winWidth]);
 
-	const [subset, setSubset] = useState<ProductProps[]>([]);
+	const [subset, setSubset] = useState<ServerProducts[]>([]);
 
 	const startIndex = currentPage * Number(perPage);
 	const endIndex = startIndex + Number(perPage);
@@ -45,14 +48,15 @@ const ProductGrid = (props: Props) => {
 		setCurrentPage(selected);
 		window?.scrollTo({ top: 0, behavior: "smooth" });
 	};
-
+	console.log("TIMBU DATA", PRODUCTS);
 	// filter by search term
 	const filteredProducts = useMemo(() => {
+		if (!PRODUCTS.length) return [];
 		return PRODUCTS.filter((product) => {
 			if (!(searchTerm.length > 1) || PRODUCTS.length < 1) {
 				return product;
 			}
-			return product.title.toLowerCase().includes(searchTerm.toLowerCase());
+			return product.name.toLowerCase().includes(searchTerm.toLowerCase());
 		});
 	}, [PRODUCTS, searchTerm]);
 
@@ -71,7 +75,7 @@ const ProductGrid = (props: Props) => {
 	}, []);
 
 	return (
-		<div className="w-full min-h-[500px] relative">
+		<div className="w-full min-h-[500px] relative overflow-hidden">
 			{filteredProducts.length === 0 && searchTerm.length > 1 && (
 				<NoProduct text={searchTerm} image="/no-product.webp" />
 			)}
@@ -80,13 +84,17 @@ const ProductGrid = (props: Props) => {
 				animate="whileInView"
 				whileInView="whileInView"
 				transition={{ duration: 0.3, staggerChildren: 0.2 }}
-				className="w-full sm:grid  sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 xl:gap-x-8 min-[1440px]:gap-x-10 gap-y-8 lg:gap-y-12 xl:gap-y-16 relative items-center flex flex-col overflow-hidden"
+				className="w-full min-[500px]:grid  min-[500px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 xl:gap-x-8 min-[1440px]:gap-x-10 gap-y-8 lg:gap-y-12 xl:gap-y-16 relative items-center flex flex-col overflow-hidden"
 			>
 				<AnimatePresence>
 					{filteredProducts.length > 0 &&
 						subset.length > 0 &&
 						subset.map((product) => (
-							<ProductCard key={product.id} {...product} />
+							<ProductCard
+								key={product.id}
+								{...product}
+								image={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${product.photos[0].url}`}
+							/>
 						))}
 				</AnimatePresence>
 			</motion.div>

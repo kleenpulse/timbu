@@ -6,11 +6,12 @@ import React, { useEffect } from "react";
 import OrderSummary from "./order-summary";
 import { useCheckout } from "@/hooks/cart/use-checkout";
 import { usePathname } from "next/navigation";
+import { useServerCheckout } from "@/hooks/cart/use-server-checkout";
 
 type Props = {};
 
 const CheckoutContent = (props: Props) => {
-	const { cart } = useCheckout();
+	const { cart } = useServerCheckout();
 
 	useEffect(() => {
 		document.title = `Checkout - ${cart.products.length} Product${

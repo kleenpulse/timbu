@@ -1,4 +1,8 @@
 export interface ProductData {
+	items: ServerProducts[];
+}
+
+export interface ServerProducts {
 	available_quantity: number;
 	buying_price: number | null;
 	categories: string[];
@@ -6,7 +10,7 @@ export interface ProductData {
 	date_created: string;
 	description: string;
 	discounted_price: number | null;
-	extra_infos: unknown | null;
+	extra_infos: { id: string; value: string; key: string }[];
 	id: string;
 	is_available: boolean;
 	is_deleted: boolean;
@@ -26,6 +30,8 @@ export interface ProductData {
 	unique_id: string;
 	url_slug: string;
 	user_id: string;
+	item_count: number;
+	price: number;
 }
 
 interface CurrencyPrice {

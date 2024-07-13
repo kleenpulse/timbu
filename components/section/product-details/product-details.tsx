@@ -5,24 +5,28 @@ import { calculateDiscount, cn } from "@/lib/utils";
 import MoreProductDetails from "./more-product-details";
 import { useCart } from "@/hooks/cart/use-cart";
 import NumericInput from "../../shared/numeric-input";
+import { ServerProducts } from "@/types/products.types";
+import { useServerCart } from "@/hooks/cart/use-server-cart";
+import ImageSlider from "@/components/shared/image-slider";
+import { useServerProduct } from "@/hooks/product/use-server-product";
 
-const ProductDetails = ({ data }: { data: ProductProps }) => {
-	const { addToCart, cart } = useCart();
+const ProductDetails = ({ data }: { data: ServerProducts }) => {
+	const { addToCart, cart } = useServerCart();
+	const { products } = useServerProduct();
 	const isInCart = cart.some((item) => item.id === data.id);
+	const product = products.find((item) => item.id === data.id);
 	const handleAddToCart = () => {
-		addToCart(data);
+		addToCart(product!);
 	};
+
+	const urls = data.photos.map(
+		(photo) => `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${photo.url}`
+	);
 
 	return (
 		<div className="w-full flex flex-col items-center md:items-start sm:gridx md:flex-row sm:justify-center xl:gap-x-20 grid-cols-2 gap-8 mt-4 place-items-center">
-			<div className="w-full max-w-[506px] bg-accent-card px-[42px] py-[49px] md:sticky top-0 min-[1320px]:w-[506px]">
-				<BlurImage
-					src={data.image}
-					alt={data.title}
-					width={506}
-					height={618}
-					className="w-full h-full"
-				/>
+			<div className="w-full max-w-[406px] xl:max-w-[506px] bg-accent-card p-6 xl:px-[42px] xl:py-[49px] md:sticky top-0 min-[1320px]:w-[506px]">
+				<ImageSlider urls={urls} />
 			</div>
 			<div className="flex flex-col gap-y-5 w-full max-w-[624px]">
 				<div className="flex items-center gap-x-10">
@@ -45,20 +49,22 @@ const ProductDetails = ({ data }: { data: ProductProps }) => {
 				<div className="flex flex-col sm:flex-row items-center gap-x-8">
 					<div className="flex items-center gap-x-2 sm:gap-x-8 max-sm:w-full max-sm:justify-between">
 						{" "}
-						<p>{data.title}</p>
+						<p>{data.name}</p>
 						<p className="flex gap-x-2">
-							<span className="line-through">${data.price}</span>
-							<b className="text-accent-primary">
+							<span className="font-bold">
+								${data.current_price[0].USD[0] * product!.item_count}
+							</span>
+							{/* <b className="text-accent-primary">
 								$
 								{calculateDiscount({
 									price: data.price,
 									discount_percentage: data.discount_percentage,
 								})}
-							</b>
+							</b> */}
 						</p>
 					</div>
-					{data.is_in_stock ? (
-						<p>(You just saved ${data.discount_percentage})</p>
+					{data.is_available ? (
+						<p className="hidden">(You just saved $)</p>
 					) : (
 						<p className="text-red-500">Out of Stock</p>
 					)}
@@ -68,15 +74,15 @@ const ProductDetails = ({ data }: { data: ProductProps }) => {
 				<div className="flex items-center gap-x-5 h-[50px]">
 					<NumericInput
 						id={data.id}
-						should_disable={!data.is_in_stock || isInCart}
+						should_disable={!data.is_available || isInCart}
 					/>
 					<button
 						type="button"
-						disabled={!data.is_in_stock || isInCart}
+						disabled={!data.is_available || isInCart}
 						onClick={handleAddToCart}
 						className="w-full bg-accent-orange text-white py-2 px-4 lg:py-3  disabled:bg-accent-white disabled:text-accent-black disabled:opacity-70 disabled:border disabled:border-accent-primary disabled:cursor-not-allowed active:scale-95 transition disabled:scale-100 h-full"
 					>
-						{!isInCart && data.is_in_stock
+						{!isInCart && data.is_available
 							? "Add To Cart"
 							: isInCart
 							? "Added to Cart"

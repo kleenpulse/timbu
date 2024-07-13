@@ -1,12 +1,12 @@
-import { type ProductData } from "@/types/products.types";
+import { ServerProducts, type ProductData } from "@/types/products.types";
 import { create } from "zustand";
 import { persist, type PersistStorage } from "zustand/middleware";
 
 type StateProps = {
-	products: ProductData[];
-	addToProducts: (product: ProductData[]) => void;
-	removeFromProducts: (product: ProductData) => void;
-	updateQuantity: (productId: ProductData["id"], quantity: number) => void;
+	products: ServerProducts[];
+	addToProducts: (product: ServerProducts[]) => void;
+	removeFromProducts: (product: ServerProducts) => void;
+	updateQuantity: (productId: ServerProducts["id"], quantity: number) => void;
 	clearProducts: () => void;
 };
 

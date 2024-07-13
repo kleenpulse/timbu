@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
+    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-select": "^2.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
     "@tanstack/react-query": "^5.51.1",
     "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
@@ -20,9 +23,13 @@
     "next": "^14.2.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.52.1",
     "react-paginate": "^8.2.0",
+    "swiper": "^11.1.4",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "validator": "^13.12.0",
+    "zod": "^3.23.8",
     "zustand": "^4.5.4"
   },
   "devDependencies": {

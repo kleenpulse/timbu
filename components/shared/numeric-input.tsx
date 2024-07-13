@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCart } from "@/hooks/cart/use-cart";
+import { useServerCart } from "@/hooks/cart/use-server-cart";
 import { useProduct } from "@/hooks/product/use-product";
+import { useServerProduct } from "@/hooks/product/use-server-product";
 import { ProductProps } from "@/lib/products";
 import { cn } from "@/lib/utils";
 import React, { useCallback, useEffect, useState } from "react";
@@ -16,8 +18,9 @@ const NumericInput: React.FC<NumericInputProps> = ({
 	id,
 	should_disable,
 }) => {
-	const { updateQuantity, cart } = useCart();
-	const { updateQuantity: updateQuantityProduct, products } = useProduct();
+	const { updateQuantity, cart } = useServerCart();
+	const { updateQuantity: updateQuantityProduct, products } =
+		useServerProduct();
 	const cart_item = cart.find((product) => product.id === id);
 	const product_item = products.find((product) => product.id === id);
 	const cart_item_count = cart_item?.item_count! ?? product_item?.item_count!;
@@ -50,7 +53,7 @@ const NumericInput: React.FC<NumericInputProps> = ({
 			updateQuantityProduct(id, newValue);
 		}
 	};
-
+	const count_is_ten = value === 10 || cart_item_count === 10;
 	return (
 		<div
 			className={cn(
@@ -78,7 +81,7 @@ const NumericInput: React.FC<NumericInputProps> = ({
 			/>
 			<button
 				onClick={handleIncrement}
-				disabled={should_disable}
+				disabled={should_disable || count_is_ten}
 				className="disabled:cursor-not-allowed px-1 text-gray-700 rounded  text-2xl hover:scale-110"
 			>
 				+

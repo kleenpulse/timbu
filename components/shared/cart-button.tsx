@@ -3,11 +3,12 @@ import React from "react";
 import CartIcon from "../icons/cart-icon";
 import CartNotEmptyIcon from "../icons/cart-not-empty";
 import Link from "next/link";
+import { useServerCart } from "@/hooks/cart/use-server-cart";
 
 type Props = {};
 
 const CartButton = (props: Props) => {
-	const { cart } = useCart();
+	const { cart } = useServerCart();
 
 	return (
 		<Link href="/cart">

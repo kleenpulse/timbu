@@ -6,9 +6,12 @@ export const useProducts = () => {
 	return useQuery({
 		queryKey: ["timbu_products"],
 		queryFn: getAllProducts as unknown as () => ProductData,
+		initialData: {
+			items: [],
+		},
 	});
 };
-const URL = process.env.NEXT_PUBLIC_BASE_URL;
+const URL = process.env.NEXT_PUBLIC_ALL_PRODUCTS_URL;
 const API_KEY = process.env.NEXT_PUBLIC_TIMBU_API_KEY;
 const APP_ID = process.env.NEXT_PUBLIC_TIMBU_APP_ID;
 const ORG_ID = process.env.NEXT_PUBLIC_TIMBU_ORG_ID;
