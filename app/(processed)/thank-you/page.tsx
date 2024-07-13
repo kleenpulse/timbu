@@ -18,7 +18,7 @@ const ThankYou = (props: Props) => {
 				<h1 className="sm:text-2xl">
 					Thank You {name} for buying {items_length} items from our store
 				</h1>
-				<p>Your Order receipt will be sent to {email}</p>
+				<p className="text-center">Your Order receipt will be sent to {email}</p>
 
 				<Link href={"/"}>
 					<button className="text-accent-orange">Continue Shopping</button>
