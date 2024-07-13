@@ -1,7 +1,7 @@
 import StarIcon from "@/components/icons/starIcon";
 import BlurImage from "@/components/miscellaneous/blur-image";
 import { ProductProps } from "@/lib/products";
-import { calculateDiscount, cn } from "@/lib/utils";
+import { calculateDiscount, cn, formatPrice } from "@/lib/utils";
 import MoreProductDetails from "./more-product-details";
 import { useCart } from "@/hooks/cart/use-cart";
 import NumericInput from "../../shared/numeric-input";
@@ -52,7 +52,8 @@ const ProductDetails = ({ data }: { data: ServerProducts }) => {
 						<p>{data.name}</p>
 						<p className="flex gap-x-2">
 							<span className="font-bold">
-								${data.current_price[0].USD[0] * product!.item_count}
+								
+								{formatPrice(current_price[0].USD[0]) * product!.item_count}
 							</span>
 							{/* <b className="text-accent-primary">
 								$
