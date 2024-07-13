@@ -13,6 +13,11 @@ const nextConfig = {
         hostname: "api.timbu.cloud",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "cdni.iconscout.com",
+        port: "",
+      },
     ],
   },
 };
