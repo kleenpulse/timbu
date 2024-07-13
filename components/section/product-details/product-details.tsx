@@ -53,7 +53,7 @@ const ProductDetails = ({ data }: { data: ServerProducts }) => {
 						<p className="flex gap-x-2">
 							<span className="font-bold">
 								
-								{formatPrice(current_price[0].USD[0]) * product!.item_count}
+								{formatPrice(current_price[0].USD[0] * product!.item_count)}
 							</span>
 							{/* <b className="text-accent-primary">
 								$
