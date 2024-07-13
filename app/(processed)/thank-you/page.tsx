@@ -26,7 +26,7 @@ const ThankYou = (props: Props) => {
 					quality={100}
 				/>
 				<h1 className="sm:text-2xl">
-					Thank You {name} for buying {items_length} item{item_length == "1" ? "" : "s"} from our store
+					Thank You {name} for buying {items_length} item{items_length == "1" ? "" : "s"} from our store
 				</h1>
 				<p className="text-center">Your Order receipt will be sent to {email}</p>
 
