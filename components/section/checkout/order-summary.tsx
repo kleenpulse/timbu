@@ -17,14 +17,14 @@ const SHIPPING = [
 const OrderSummary = () => {
 	const [isPending, startTransition] = useTransition();
 	const [text, setText] = useState("");
-	const { cart, updateShipping, updateTotal } = useServerCheckout();
+	const { cart, updateShipping, updateTotal } = useCheckout();
 
 	useEffect(() => {
 		updateShipping(cart.shipping);
 	}, [cart.shipping]);
 
 	const sub_total = cart.products.reduce(
-		(acc, item) => acc + item.current_price[0].USD[0] * item.item_count,
+		(acc, item) => acc + item.price * item.item_count,
 		0
 	);
 	useEffect(() => {
@@ -42,11 +42,7 @@ const OrderSummary = () => {
 			<div className="w-full flex flex-col md:flex-row md:justify-between md:items-start gap-x-8 xl:gap-x-12 gap-y-12">
 				<div className="flex flex-col gap-y-10 w-full max-h-[400px] xl:max-h-[600px] overflow-y-auto cart__scroll">
 					{products.map((item) => (
-						<CheckoutCard
-							key={item.id}
-							{...item}
-							image={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${item.photos[0].url}`}
-						/>
+						<CheckoutCard key={item.id} {...item} />
 					))}
 				</div>
 				<div className="flex flex-col gap-y-8 md:gap-y-12 flex-shrink-x0 w-full max-w-[302px] xl:max-w-[359px] h-full justify-between  md:min-h-[425px] ">

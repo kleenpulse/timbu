@@ -4,14 +4,9 @@ import { cn, formatPrice } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useSearch } from "@/hooks/filters/use-search";
 import { ServerProducts } from "@/types/products.types";
+import { ProductProps } from "@/lib/products";
 
-const ProductCard = ({
-	id,
-	name,
-	photos,
-	current_price,
-	image,
-}: ServerProducts & { image: string }) => {
+const ProductCard = ({ id, title, image, price }: ProductProps) => {
 	const { updateSearchTerm, updateShowSearch, show_search, searchTerm } =
 		useSearch();
 
@@ -81,7 +76,7 @@ const ProductCard = ({
 								searchTerm.length > 2 ? "w-[50px] overflow-x-auto" : ""
 							)}
 							dangerouslySetInnerHTML={{
-								__html: name!.replace(
+								__html: title!.replace(
 									new RegExp(`(${searchTerm})`, "gi"),
 									(match, group) =>
 										`<span  style="color: black; background-color: ${
@@ -93,13 +88,11 @@ const ProductCard = ({
 							}}
 						/>
 					) : (
-						<span>{name}</span>
+						<span>{title}</span>
 					)}
 				</span>
 				<p className="flex gap-x-2">
-					<span className=" font-bold md:text-lg">
-						{formatPrice(current_price[0].USD[0])}
-					</span>
+					<span className=" font-bold md:text-lg">{formatPrice(price)}</span>
 					{/* <b className="text-accent-primary">
 						$${calculateDiscount({ price, discount_percentage })}
 					</b> */}

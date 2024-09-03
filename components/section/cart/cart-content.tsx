@@ -11,7 +11,7 @@ import { useServerCart } from "@/hooks/cart/use-server-cart";
 type Props = {};
 
 const CartContent = (props: Props) => {
-	const { cart } = useServerCart();
+	const { cart } = useCart();
 	const ids_array = cart.map((item) => item.id);
 
 	useEffect(() => {

@@ -14,6 +14,7 @@ type StateProps = {
 	removeFromCheckout: (product: ProductProps) => void;
 	updateQuantity: (productId: ProductProps["id"], quantity: number) => void;
 	clearCart: () => void;
+	updateTotal: (total: number) => void;
 };
 
 const storage: PersistStorage<StateProps> = {
@@ -36,7 +37,8 @@ export const useCheckout = create<StateProps>()(
 				shipping: "door",
 				total: 0,
 			},
-
+			updateTotal: (total) =>
+				set((state) => ({ cart: { ...state.cart, total } })),
 			addToCheckout: (cart) =>
 				set((state) => {
 					const existingProducts = state.cart.products.map(

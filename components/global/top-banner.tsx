@@ -8,7 +8,7 @@ const TopBanner = () => {
 			)}
 		>
 			<p className="text-xs  min-[500px]:text-sm md:text-lg text-accent-black">
-				FREE SHIPPING ON EVERY PRODUCT FROM THE 22ND OF JULY
+				FREE SHIPPING ON EVERY PRODUCT FROM THE 22ND OF OCT.
 			</p>
 		</div>
 	);
