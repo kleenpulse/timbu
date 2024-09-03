@@ -18,9 +18,8 @@ const NumericInput: React.FC<NumericInputProps> = ({
 	id,
 	should_disable,
 }) => {
-	const { updateQuantity, cart } = useServerCart();
-	const { updateQuantity: updateQuantityProduct, products } =
-		useServerProduct();
+	const { updateQuantity, cart } = useCart();
+	const { updateQuantity: updateQuantityProduct, products } = useProduct();
 	const cart_item = cart.find((product) => product.id === id);
 	const product_item = products.find((product) => product.id === id);
 	const cart_item_count = cart_item?.item_count! ?? product_item?.item_count!;

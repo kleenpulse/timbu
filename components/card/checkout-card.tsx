@@ -8,18 +8,17 @@ import { useServerCheckout } from "@/hooks/cart/use-server-checkout";
 
 const CheckoutCard = ({
 	id,
-	name,
-	current_price,
+	title,
 	price,
 	image,
 	item_count,
-}: ServerProducts & { image: string }) => {
-	const { cart } = useServerCheckout();
+}: ProductProps) => {
+	const { cart } = useCheckout();
 
 	const handleItemRemove = () => {
-		const new_price = cart.total - current_price[0].USD[0] * item_count;
+		const new_price = cart.total - price * item_count;
 		const newCart = cart.products.filter((item) => item.id !== id);
-		useServerCheckout.setState({
+		useCheckout.setState({
 			cart: { ...cart, products: newCart, total: new_price },
 		});
 	};
@@ -39,7 +38,7 @@ const CheckoutCard = ({
 					/>
 				</div>
 				<div className="flex flex-col gap-y-4 items-start">
-					<p className="md:text-xl lg:text-2xl">{name}</p>
+					<p className="md:text-xl lg:text-2xl">{title}</p>
 					<NumericInputCheckout id={id} should_disable={false} />
 					<button
 						className="text-accent-orange md:text-lg"
@@ -49,9 +48,7 @@ const CheckoutCard = ({
 					</button>
 				</div>
 			</div>
-			<p className="sm:text-2xl font-bold">
-				{formatPrice(current_price[0].USD[0] * item_count)}
-			</p>
+			<p className="sm:text-2xl font-bold">{formatPrice(price * item_count)}</p>
 		</div>
 	);
 };

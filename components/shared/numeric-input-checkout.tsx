@@ -18,8 +18,8 @@ const NumericInputCheckout: React.FC<NumericInputCheckoutProps> = ({
 	id,
 	should_disable,
 }) => {
-	const { updateQuantity, cart } = useServerCheckout();
-	const { updateQuantity: updateQuantityCart } = useServerCart();
+	const { updateQuantity, cart } = useCheckout();
+	const { updateQuantity: updateQuantityCart } = useCart();
 
 	const cart_item = cart.products.find((product) => product.id === id);
 	const cart_item_count = cart_item?.item_count!;

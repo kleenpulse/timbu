@@ -17,18 +17,22 @@ const ThankYou = (props: Props) => {
 		<div className="w-full min-h-screen flex justify-center">
 			<div className="flex flex-col gap-y-4 items-center">
 				<BlurImage
-					src="https://cdni.iconscout.com/illustration/premium/thumb/order-confirmed-5115435-4273317.png"
-					width={290}
-					height={314}
+					src="/order-confirmed.png"
+					width={600}
+					height={600}
 					alt="product"
 					className="max-w-[90%] md:max-w-[600px] w-full "
 					draggable={false}
 					quality={100}
+					priority
 				/>
 				<h1 className="sm:text-2xl">
-					Thank You {name} for buying {items_length} item{items_length == "1" ? "" : "s"} from our store
+					Thank You {name} for buying {items_length} item
+					{items_length == "1" ? "" : "s"} from our store
 				</h1>
-				<p className="text-center">Your Order receipt will be sent to {email}</p>
+				<p className="text-center">
+					Your Order receipt will be sent to {email}
+				</p>
 
 				<Link href={"/"}>
 					<button className="text-accent-orange">Continue Shopping</button>

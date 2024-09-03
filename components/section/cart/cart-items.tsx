@@ -14,13 +14,13 @@ type Props = {};
 
 const CartItems = (props: Props) => {
 	const router = useRouter();
-	const { cart } = useServerCart();
+	const { cart } = useCart();
 
 	const {
 		cart: { shipping },
 		updateShipping,
 		addToCheckout,
-	} = useServerCheckout();
+	} = useCheckout();
 
 	if (cart.length === 0) return <EmptyCart />;
 	const handleCheckout = () => {
@@ -32,7 +32,7 @@ const CartItems = (props: Props) => {
 		router.push("/checkout");
 	};
 	const sub_total = cart.reduce(
-		(acc, item) => acc + item.current_price[0].USD[0] * item.item_count,
+		(acc, item) => acc + item.price * item.item_count,
 		0
 	);
 	const total_item_count = cart.reduce((acc, item) => acc + item.item_count, 0);
@@ -41,11 +41,7 @@ const CartItems = (props: Props) => {
 		<div className="w-full flex flex-col md:flex-row md:justify-between md:items-start md:gap-x-8 xl:gap-x-16 gap-y-10">
 			<div className="flex flex-col gap-y-10 w-full max-h-[400px] xl:max-h-[600px] overflow-y-auto cart__scroll">
 				{cart.map((item) => (
-					<CartCard
-						key={item.id}
-						{...item}
-						image={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${item.photos[0].url}`}
-					/>
+					<CartCard key={item.id} {...item} />
 				))}
 			</div>
 			<div className="flex flex-col gap-y-8 md:gap-y-12 flex-shrink-0 ">

@@ -5,20 +5,18 @@ import { ProductProps } from "@/lib/products";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { ServerProducts } from "@/types/products.types";
 
-const MoreProductDetails = ({ data }: { data: ServerProducts }) => {
+const MoreProductDetails = ({ data }: { data: ProductProps }) => {
 	const [activeIndex, setActiveIndex] = useState<number | null>(0);
 	// Initialize with index 0
 	const DETAILS = [
 		{
 			title: "About Product",
-			body: data.description,
+			body: data.about,
 			id: 1,
 		},
 		{
 			title: "How to use",
-			body: data.extra_infos.map(
-				(info) => info.key === "how_to_use" && info.value
-			),
+			body: data.how_to_use,
 			id: 2,
 		},
 		{

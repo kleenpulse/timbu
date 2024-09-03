@@ -8,7 +8,7 @@ import { useServerCart } from "@/hooks/cart/use-server-cart";
 type Props = {};
 
 const CartButton = (props: Props) => {
-	const { cart } = useServerCart();
+	const { cart } = useCart();
 
 	return (
 		<Link href="/cart">

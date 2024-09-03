@@ -9,19 +9,18 @@ import { ServerProducts } from "@/types/products.types";
 import { useServerCart } from "@/hooks/cart/use-server-cart";
 import ImageSlider from "@/components/shared/image-slider";
 import { useServerProduct } from "@/hooks/product/use-server-product";
+import { useProduct } from "@/hooks/product/use-product";
 
-const ProductDetails = ({ data }: { data: ServerProducts }) => {
-	const { addToCart, cart } = useServerCart();
-	const { products } = useServerProduct();
+const ProductDetails = ({ data }: { data: ProductProps }) => {
+	const { addToCart, cart } = useCart();
+	const { products } = useProduct();
 	const isInCart = cart.some((item) => item.id === data.id);
 	const product = products.find((item) => item.id === data.id);
 	const handleAddToCart = () => {
 		addToCart(product!);
 	};
 
-	const urls = data.photos.map(
-		(photo) => `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${photo.url}`
-	);
+	const urls = [data.image, data.image];
 
 	return (
 		<div className="w-full flex flex-col items-center md:items-start sm:gridx md:flex-row sm:justify-center xl:gap-x-20 grid-cols-2 gap-8 mt-4 place-items-center">
@@ -49,12 +48,9 @@ const ProductDetails = ({ data }: { data: ServerProducts }) => {
 				<div className="flex flex-col sm:flex-row items-center gap-x-8">
 					<div className="flex items-center gap-x-2 sm:gap-x-8 max-sm:w-full max-sm:justify-between">
 						{" "}
-						<p>{data.name}</p>
+						<p>{data.title}</p>
 						<p className="flex gap-x-2">
-							<span className="font-bold">
-								
-								{formatPrice(product.current_price[0].USD[0] * product!.item_count)}
-							</span>
+							<span className="font-bold">{formatPrice(data.price)}</span>
 							{/* <b className="text-accent-primary">
 								$
 								{calculateDiscount({
@@ -64,7 +60,7 @@ const ProductDetails = ({ data }: { data: ServerProducts }) => {
 							</b> */}
 						</p>
 					</div>
-					{data.is_available ? (
+					{data.is_in_stock ? (
 						<p className="hidden">(You just saved $)</p>
 					) : (
 						<p className="text-red-500">Out of Stock</p>
@@ -75,15 +71,15 @@ const ProductDetails = ({ data }: { data: ServerProducts }) => {
 				<div className="flex items-center gap-x-5 h-[50px]">
 					<NumericInput
 						id={data.id}
-						should_disable={!data.is_available || isInCart}
+						should_disable={!data.is_in_stock || isInCart}
 					/>
 					<button
 						type="button"
-						disabled={!data.is_available || isInCart}
+						disabled={!data.is_in_stock || isInCart}
 						onClick={handleAddToCart}
 						className="w-full bg-accent-orange text-white py-2 px-4 lg:py-3  disabled:bg-accent-white disabled:text-accent-black disabled:opacity-70 disabled:border disabled:border-accent-primary disabled:cursor-not-allowed active:scale-95 transition disabled:scale-100 h-full"
 					>
-						{!isInCart && data.is_available
+						{!isInCart && data.is_in_stock
 							? "Add To Cart"
 							: isInCart
 							? "Added to Cart"

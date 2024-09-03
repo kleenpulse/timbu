@@ -7,19 +7,12 @@ import { useCart } from "@/hooks/cart/use-cart";
 import { useServerCart } from "@/hooks/cart/use-server-cart";
 import { ServerProducts } from "@/types/products.types";
 
-const CartCard = ({
-	id,
-	name,
-	current_price,
-	price,
-	image,
-	item_count,
-}: ServerProducts & { image: string }) => {
-	const { cart } = useServerCart();
+const CartCard = ({ id, title, price, image, item_count }: ProductProps) => {
+	const { cart } = useCart();
 
 	const handleItemRemove = () => {
 		const newCart = cart.filter((item) => item.id !== id);
-		useServerCart.setState({ cart: newCart });
+		useCart.setState({ cart: newCart });
 	};
 
 	return (
@@ -37,7 +30,7 @@ const CartCard = ({
 					/>
 				</div>
 				<div className="flex flex-col gap-y-4 items-start">
-					<p className="md:text-2xl">{name}</p>
+					<p className="md:text-2xl">{title}</p>
 					<NumericInput id={id} should_disable={false} />
 					<button
 						className="text-accent-orange md:text-lg"
@@ -47,9 +40,7 @@ const CartCard = ({
 					</button>
 				</div>
 			</div>
-			<p className="text-2xl font-bold">
-				{formatPrice(current_price[0].USD[0] * item_count)}
-			</p>
+			<p className="text-2xl font-bold">{formatPrice(price * item_count)}</p>
 		</div>
 	);
 };

@@ -11,7 +11,7 @@ import { useServerCheckout } from "@/hooks/cart/use-server-checkout";
 type Props = {};
 
 const CheckoutContent = (props: Props) => {
-	const { cart } = useServerCheckout();
+	const { cart } = useCheckout();
 
 	useEffect(() => {
 		document.title = `Checkout - ${cart.products.length} Product${

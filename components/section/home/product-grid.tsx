@@ -18,8 +18,8 @@ const Pagination = dynamic(() => import("react-paginate"), {
 	loading: () => <LoadingSpinner />,
 });
 const ProductGrid = (props: Props) => {
-	// const { products: PRODUCTS } = useProduct();
-	const { products: PRODUCTS } = useServerProduct();
+	const { products: PRODUCTS } = useProduct();
+	// const { products: PRODUCTS } = useServerProduct();
 	const [totalPages, setTotalPages] = useState(0);
 	const [currentPage, setCurrentPage] = useState(0);
 	const { winWidth } = useWindowWidth();
@@ -39,7 +39,7 @@ const ProductGrid = (props: Props) => {
 		}
 	}, [winWidth]);
 
-	const [subset, setSubset] = useState<ServerProducts[]>([]);
+	const [subset, setSubset] = useState<ProductProps[]>([]);
 
 	const startIndex = currentPage * Number(perPage);
 	const endIndex = startIndex + Number(perPage);
@@ -48,7 +48,7 @@ const ProductGrid = (props: Props) => {
 		setCurrentPage(selected);
 		window?.scrollTo({ top: 0, behavior: "smooth" });
 	};
-	console.log("TIMBU DATA", PRODUCTS);
+
 	// filter by search term
 	const filteredProducts = useMemo(() => {
 		if (!PRODUCTS.length) return [];
@@ -56,7 +56,7 @@ const ProductGrid = (props: Props) => {
 			if (!(searchTerm.length > 1) || PRODUCTS.length < 1) {
 				return product;
 			}
-			return product.name.toLowerCase().includes(searchTerm.toLowerCase());
+			return product.title.toLowerCase().includes(searchTerm.toLowerCase());
 		});
 	}, [PRODUCTS, searchTerm]);
 
@@ -93,7 +93,7 @@ const ProductGrid = (props: Props) => {
 							<ProductCard
 								key={product.id}
 								{...product}
-								image={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${product.photos[0].url}`}
+								// image={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${product.photos[0].url}`}
 							/>
 						))}
 				</AnimatePresence>
